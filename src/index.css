@@ -35,7 +35,7 @@
   }
 
   .sidebar-item {
-    @apply p-3 px-4 rounded-lg mb-1 text-sleek-muted text-sm font-medium flex items-center gap-3 cursor-pointer transition-all duration-200;
+    @apply p-4 px-4 rounded-lg mb-1 text-sleek-muted text-sm font-medium flex items-center gap-3 cursor-pointer transition-all duration-200 min-h-12;
   }
 
   .sidebar-item.active {

@@ -45,9 +45,28 @@ export function VideoEditor({ initialUrl, duration, onClose, onSave }: VideoEdit
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [mode, setMode] = useState<'trim' | 'text' | 'arrange'>('trim');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
   
   const videoRef = useRef<HTMLVideoElement>(null);
   const timelineRef = useRef<HTMLDivElement>(null);
+  
+  const generateTitles = async (theme: string) => {
+    setIsGenerating(true);
+    try {
+      const response = await fetch("/api/generate-title", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ theme }),
+      });
+      const titles = await response.json();
+      setSuggestions(titles);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
 
   const activeSegment = segments[activeSegmentIndex];
 
@@ -269,6 +288,57 @@ export function VideoEditor({ initialUrl, duration, onClose, onSave }: VideoEdit
                   <Plus size={20} />
                   <span className="text-[9px] font-black uppercase tracking-widest">Inscribe Neural Marker</span>
                 </button>
+
+                <div className="space-y-4 pt-4 border-t border-white/5">
+                    <label className="text-[10px] font-black uppercase text-sleek-muted tracking-widest block">AI Creative Assistant</label>
+                    <div className="flex gap-2">
+                        <input 
+                            type="text" 
+                            placeholder="Describe theme..." 
+                            className="flex-1 bg-black/20 border border-sleek-border rounded-lg px-3 py-2 text-[10px] font-mono uppercase tracking-widest focus:border-sleek-accent/50 focus:ring-0"
+                            onKeyDown={(e) => {
+                                if (e.key === 'Enter') generateTitles(e.currentTarget.value);
+                            }}
+                        />
+                        <button 
+                           onClick={(e) => {
+                             const input = e.currentTarget.parentElement?.querySelector('input');
+                             if (input) generateTitles(input.value);
+                           }}
+                           disabled={isGenerating}
+                           className="px-4 py-2 bg-sleek-accent text-white rounded-lg text-[10px] uppercase font-black hover:scale-105 transition-all"
+                        >
+                          {isGenerating ? "..." : "Forge"}
+                        </button>
+                    </div>
+                    
+                    {suggestions.length > 0 && (
+                    <div className="space-y-2">
+                      {suggestions.map((s, i) => (
+                        <button 
+                            key={i} 
+                            onClick={() => {
+                                // Add overlay with suggested text
+                                addTextOverlay();
+                                // Wait for it to be added? No, simple approach is add now and update it...
+                                // Actually, let's just update the last added overlay.
+                                setSegments(prev => prev.map((seg, idx) => {
+                                    if (idx !== activeSegmentIndex) return seg;
+                                    const lastOverlay = seg.textOverlays[seg.textOverlays.length - 1];
+                                    return {
+                                        ...seg,
+                                        textOverlays: seg.textOverlays.map(o => o.id === lastOverlay.id ? { ...o, text: s } : o)
+                                    };
+                                }));
+                            }}
+                            className="w-full text-left p-2 rounded-lg bg-white/5 border border-white/5 text-[10px] font-medium text-white hover:bg-sleek-accent/20 transition-all"
+                        >
+                          {s}
+                        </button>
+                      ))}
+                    </div>
+                    )}
+                </div>
 
                 <div className="space-y-3">
                   {activeSegment.textOverlays.map(overlay => (

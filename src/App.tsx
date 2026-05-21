@@ -8,6 +8,9 @@ import { motion, AnimatePresence } from "motion/react";
 import { Sparkles, MessageSquare, ChevronRight, Github, Info, Terminal, Settings, Trash2, PlusCircle, Brain, Target, Zap, Cpu } from "lucide-react";
 import { ChatInput } from "./components/ChatInput";
 import { ChatMessage } from "./components/ChatMessage";
+import { PersistentChat } from "./components/PersistentChat";
+import { MetacognitiveTracker } from "./components/MetacognitiveTracker";
+import { WriterForge } from "./components/WriterForge";
 import { streamChat, generateImage, generateVideo, generateAudio, type ChatMessage as ChatMessageType, type CinematicConfig } from "./lib/gemini";
 import { cn } from "./lib/utils";
 
@@ -48,6 +51,7 @@ export default function App() {
     ];
   });
   const [activeThreadId, setActiveThreadId] = useState(() => localStorage.getItem("worthwyl_active_thread") || "1");
+  const [activeView, setActiveView] = useState<'forge' | 'tracker' | 'writer'>('forge');
   const [isLoading, setIsLoading] = useState(false);
   const [renderingStage, setRenderingStage] = useState("");
   const [thinkingStage, setThinkingStage] = useState("");
@@ -244,7 +248,7 @@ export default function App() {
         role: "model", 
         text: result.isSimulation ? "Neural simulation complete. Cinematic asset proxied." : "Cinematic sequence rendered. Temporal synthesis stable.",
         videoUrl: result.url,
-        videoObject: result.object,
+        videoObject: undefined,
         isSimulation: result.isSimulation,
         simulationData: result.simulationData
       };
@@ -277,7 +281,7 @@ export default function App() {
         role: "model", 
         text: result.isSimulation ? "Extension simulated via neural assets." : "Sequence extension complete. Temporal bridge established.",
         videoUrl: result.url,
-        videoObject: result.object,
+        videoObject: undefined,
         isSimulation: result.isSimulation,
         simulationData: result.simulationData
       };
@@ -332,7 +336,7 @@ export default function App() {
         role: "model", 
         text: "Sequence refined. Neural overlays and temporal adjustments applied.",
         videoUrl: result.url,
-        videoObject: result.object
+        videoObject: undefined
       };
       setThreads(prev => prev.map(t => t.id === activeThreadId ? { ...t, messages: [...t.messages, modelMessage] } : t));
       addLog("Refinement successful", "success");
@@ -421,9 +425,30 @@ export default function App() {
         </div>
 
         <nav className="flex items-center gap-6">
+          <div className="flex bg-sleek-surface rounded-full p-1 border border-sleek-border">
+            <button 
+                onClick={() => setActiveView('forge')}
+                className={cn("px-4 py-1.5 rounded-full text-[10px] font-black uppercase transition-all", activeView === 'forge' ? 'bg-sleek-accent text-white' : 'text-sleek-muted')}
+            >
+                Forge
+            </button>
+            <button 
+                onClick={() => setActiveView('tracker')}
+                className={cn("px-4 py-1.5 rounded-full text-[10px] font-black uppercase transition-all", activeView === 'tracker' ? 'bg-sleek-accent text-white' : 'text-sleek-muted')}
+            >
+                Tracker
+            </button>
+            <button 
+                onClick={() => setActiveView('writer')}
+                className={cn("px-4 py-1.5 rounded-full text-[10px] font-black uppercase transition-all", activeView === 'writer' ? 'bg-sleek-accent text-white' : 'text-sleek-muted')}
+            >
+                Writer
+            </button>
+          </div>
+          <div className="w-[1px] h-6 bg-sleek-border" />
           <div className="flex items-center gap-2 px-3 py-1 bg-sleek-accent/10 border border-sleek-accent/20 rounded-full">
             <div className="w-1.5 h-1.5 rounded-full bg-sleek-accent animate-pulse" />
-            <span className="text-[10px] font-bold text-sleek-accent tracking-wider uppercase">Active Forge</span>
+            <span className="text-[10px] font-bold text-sleek-accent tracking-wider uppercase">Active {activeView === 'forge' ? 'Forge' : activeView === 'tracker' ? 'Tracker' : 'Writer'}</span>
           </div>
           <button 
             onClick={() => setIsDiagnosticOpen(true)}
@@ -561,6 +586,8 @@ export default function App() {
 
       {/* Main Grid Content */}
       <div className="flex-1 flex overflow-hidden">
+        {activeView === 'forge' && (
+        <>
         {/* Left Sidebar - Thread Management */}
         <aside className="hidden lg:flex w-64 border-r border-sleek-border flex-col p-6 sleek-bg">
           <div className="mb-4 flex items-center justify-between">
@@ -721,6 +748,18 @@ export default function App() {
             ))}
           </div>
         </aside>
+        </>
+        )}
+        {activeView === 'tracker' && (
+          <div className="w-full p-6">
+            <MetacognitiveTracker />
+          </div>
+        )}
+        {activeView === 'writer' && (
+          <div className="w-full p-6">
+            <WriterForge />
+          </div>
+        )}
       </div>
 
       {/* Footer */}
@@ -732,6 +771,7 @@ export default function App() {
         </div>
         <div>LATENCY 12MS</div>
       </footer>
+      <PersistentChat />
     </div>
   );
 }

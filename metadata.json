@@ -1,6 +1,6 @@
 {
-  "name": "WorthWyl AI",
+  "name": "WorthWyl OS v. 2",
   "description": "A high-performance AI Forge for advanced reasoning, visual synthesis, and cinematic video generation.",
   "requestFramePermissions": [],
-  "majorCapabilities": []
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
