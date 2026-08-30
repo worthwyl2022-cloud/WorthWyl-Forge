@@ -109,11 +109,11 @@ export function ChatMessage({ message, onExtend, onEdit }: ChatMessageProps) {
 
         {message.videoUrl && (
           <div className="mt-4 flex flex-col gap-3">
-            {message.isSimulation && (
-              <div className="flex items-center gap-2 p-3 rounded-lg bg-sleek-accent/5 border border-sleek-accent/10">
-                <div className="w-2 h-2 rounded-full bg-sleek-accent animate-pulse" />
-                <span className="text-[9px] font-black uppercase tracking-widest text-sleek-accent">Neural Simulation Mode [Free]</span>
-                <span className="text-[8px] font-medium text-sleek-muted ml-auto block max-w-[150px] truncate">{message.simulationData}</span>
+            {message.simulationData && (
+              <div className="flex items-center gap-2 p-2.5 rounded-xl bg-white/[0.04] border border-white/10 backdrop-blur-md">
+                <div className="w-2 h-2 rounded-full bg-sleek-accent animate-pulse shadow-[0_0_8px_rgba(59,130,246,0.8)]" />
+                <span className="text-[9px] font-black uppercase tracking-widest text-sleek-accent">Cinematic Synthesis Stream</span>
+                <span className="text-[8px] font-mono text-sleek-muted ml-auto block max-w-[200px] truncate">{message.simulationData}</span>
               </div>
             )}
             <div className="rounded-lg overflow-hidden border border-white/10 group relative">

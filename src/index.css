@@ -1,69 +1,157 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap');
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-brand: "Cinzel", Georgia, serif;
 
-  --color-sleek-bg: #0a0a0c;
-  --color-sleek-accent: #3b82f6;
-  --color-sleek-border: rgba(255, 255, 255, 0.08);
-  --color-sleek-text: #e1e1e6;
-  --color-sleek-muted: #8e9299;
-  --color-sleek-surface: rgba(255, 255, 255, 0.03);
+  --color-sleek-bg: #050508;
+  --color-sleek-surface: rgba(255, 255, 255, 0.035);
+  --color-sleek-border: rgba(255, 255, 255, 0.1);
+  --color-sleek-accent: #f59e0b;
+  --color-sleek-text: #f3f4f6;
+  --color-sleek-muted: #9ca3af;
 }
 
 @layer base {
   body {
-    @apply bg-sleek-bg text-sleek-text font-sans antialiased selection:bg-sleek-accent/30 selection:text-white;
+    @apply bg-[#050508] text-sleek-text font-sans antialiased selection:bg-amber-500/40 selection:text-white;
     overflow-x: hidden;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -10%, rgba(245, 158, 11, 0.18), transparent 70%),
+      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(239, 68, 68, 0.1), transparent 70%),
+      radial-gradient(ellipse 70% 50% at 20% 80%, rgba(59, 130, 246, 0.08), transparent 70%);
+    background-attachment: fixed;
   }
 }
 
 @layer components {
+  /* Brand Typography */
+  .font-brand {
+    font-family: var(--font-brand);
+  }
+
+  .worthwyl-brand-title {
+    font-family: 'Cinzel', Georgia, serif;
+    letter-spacing: 0.06em;
+    background: linear-gradient(180deg, #fff7ed 0%, #fed7aa 35%, #fb923c 70%, #ea580c 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 25px rgba(249, 115, 22, 0.4);
+    filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.8));
+  }
+
+  .worthwyl-brand-sub {
+    font-family: 'Cinzel', Georgia, serif;
+    letter-spacing: 0.18em;
+    color: #fdba74;
+    text-shadow: 0 0 12px rgba(251, 146, 60, 0.6);
+  }
+
+  /* Ultra-Glossy Clear-Coated Glass Panel with Ember Trim */
+  .glossy-panel {
+    @apply rounded-3xl backdrop-blur-2xl transition-all duration-300;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.07) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(8, 8, 12, 0.82);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-top: 1px solid rgba(254, 215, 170, 0.35);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6), 0 0 30px rgba(249, 115, 22, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.2);
+  }
+
+  /* Clear-Coated Card with Warm Ember Glow */
+  .glossy-card {
+    @apply rounded-2xl backdrop-blur-xl transition-all duration-300;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.015) 100%), rgba(12, 12, 16, 0.72);
+    border: 1px solid rgba(255, 255, 255, 0.09);
+    border-top: 1px solid rgba(254, 215, 170, 0.25);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  }
+
+  .glossy-card:hover {
+    border-color: rgba(249, 115, 22, 0.4);
+    border-top-color: rgba(254, 215, 170, 0.5);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.55), 0 0 25px rgba(249, 115, 22, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+
+  /* Clear-Coated Pill */
+  .glossy-pill {
+    @apply rounded-full backdrop-blur-xl transition-all duration-200;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%), rgba(18, 18, 24, 0.75);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 1px solid rgba(254, 215, 170, 0.35);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+
+  /* Clear-Coated Glow Action Buttons */
+  .glossy-btn-primary {
+    @apply rounded-2xl font-black uppercase tracking-wider text-white transition-all duration-200 flex items-center justify-center cursor-pointer;
+    background: linear-gradient(180deg, #f97316 0%, #c2410c 100%);
+    border: 1px solid rgba(254, 215, 170, 0.5);
+    border-top: 1px solid rgba(255, 255, 255, 0.7);
+    box-shadow: 0 8px 25px rgba(249, 115, 22, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.4);
+  }
+  .glossy-btn-primary:hover {
+    background: linear-gradient(180deg, #fb923c 0%, #ea580c 100%);
+    box-shadow: 0 10px 32px rgba(249, 115, 22, 0.65), inset 0 1px 1px rgba(255, 255, 255, 0.55);
+    transform: translateY(-1px);
+  }
+  .glossy-btn-primary:active {
+    transform: translateY(1px);
+  }
+
+  .glossy-btn-amber {
+    @apply rounded-2xl font-black uppercase tracking-wider text-black transition-all duration-200 flex items-center justify-center cursor-pointer;
+    background: linear-gradient(180deg, #fef08a 0%, #f59e0b 50%, #d97706 100%);
+    border: 1px solid rgba(254, 240, 138, 0.6);
+    border-top: 1px solid rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 25px rgba(245, 158, 11, 0.45), inset 0 1px 1px rgba(255, 255, 255, 0.5);
+  }
+  .glossy-btn-amber:hover {
+    background: linear-gradient(180deg, #ffffff 0%, #fde047 50%, #f59e0b 100%);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.7), inset 0 1px 1px rgba(255, 255, 255, 0.6);
+    transform: translateY(-1px);
+  }
+
   .sleek-container {
     @apply min-h-screen flex flex-col;
-    background: radial-gradient(circle at 50% -20%, #1c1c24 0%, #0a0a0c 100%);
   }
 
   .sleek-nav {
-    @apply h-16 border-b border-sleek-border flex items-center justify-between px-6 bg-sleek-bg/80 backdrop-blur-md sticky top-0 z-50;
-  }
-
-  .sleek-panel {
-    @apply bg-sleek-bg p-6;
+    @apply h-16 border-b border-white/10 flex items-center justify-between px-6 bg-black/50 backdrop-blur-2xl sticky top-0 z-50;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4), inset 0 -1px 0 rgba(249, 115, 22, 0.15);
   }
 
   .sidebar-item {
-    @apply p-4 px-4 rounded-lg mb-1 text-sleek-muted text-sm font-medium flex items-center gap-3 cursor-pointer transition-all duration-200 min-h-12;
+    @apply p-3 px-4 rounded-xl mb-1 text-sleek-muted text-xs font-semibold flex items-center gap-3 cursor-pointer transition-all duration-200;
   }
 
   .sidebar-item.active {
-    @apply bg-sleek-accent/10 text-sleek-accent;
-  }
-
-  .stat-card {
-    @apply bg-sleek-surface border border-sleek-border p-4 rounded-xl;
+    @apply bg-amber-500/15 text-amber-400 border border-amber-500/30;
+    box-shadow: 0 0 18px rgba(245, 158, 11, 0.25);
   }
 
   .custom-scrollbar::-webkit-scrollbar {
-    width: 4px;
+    width: 5px;
+    height: 5px;
   }
   .custom-scrollbar::-webkit-scrollbar-track {
-    @apply bg-transparent;
+    background: rgba(0, 0, 0, 0.15);
   }
   .custom-scrollbar::-webkit-scrollbar-thumb {
-    @apply bg-white/10 rounded-full hover:bg-white/20 transition-colors;
+    background: rgba(251, 146, 60, 0.25);
+    border-radius: 9999px;
+  }
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: rgba(251, 146, 60, 0.45);
   }
 
   .markdown-body {
-    @apply leading-relaxed text-sm lg:text-base text-sleek-text;
+    @apply leading-relaxed text-xs lg:text-sm text-sleek-text;
   }
   .markdown-body code {
-    @apply font-mono bg-white/5 px-1.5 py-0.5 rounded text-sleek-accent;
+    @apply font-mono bg-white/10 px-1.5 py-0.5 rounded text-amber-400;
   }
   .markdown-body pre {
-    @apply bg-black/40 p-4 rounded-xl border border-sleek-border my-4 overflow-x-auto;
+    @apply bg-black/60 p-4 rounded-2xl border border-white/10 my-4 overflow-x-auto;
   }
 }
-

@@ -1,0 +1,132 @@
+[
+  {
+    "receipt_id": "RCPT-E2C3A3FAC172",
+    "item_id": "CORP-001",
+    "domain": "Enterprise Security",
+    "premise_atom": {
+      "proposition": "The system allows full guest checkout without authentication.",
+      "lane": "enterprise.policy",
+      "provenance": "AXIOMATIC"
+    },
+    "hypothesis_atom": {
+      "proposition": "The system prohibits unauthenticated users from making purchases.",
+      "lane": "working.memory",
+      "provenance": "INFERENCE"
+    },
+    "ground_truth_contradiction": true,
+    "substrate_verdict": {
+      "is_contradiction": true,
+      "confidence_score": 0.95,
+      "resolution_strategy": "LOCK_AXIOMATIC_LANE",
+      "rationale": "Lexical polarity clash detected between 'allows' and 'prohibits'."
+    },
+    "verification_status": "PASSED",
+    "latency_ms": 0.0054,
+    "timestamp_utc": "2026-08-28T22:47:11Z",
+    "integrity_sha256": "69e3d94c71564ab8c792328a1dabc20d762f0d32265adc9facea73b09e89285d"
+  },
+  {
+    "receipt_id": "RCPT-C2A277315825",
+    "item_id": "CORP-002",
+    "domain": "Compliance",
+    "premise_atom": {
+      "proposition": "Customer data is encrypted at rest using AES-256 GCM keys.",
+      "lane": "enterprise.policy",
+      "provenance": "AXIOMATIC"
+    },
+    "hypothesis_atom": {
+      "proposition": "Data in the primary database is stored in cleartext.",
+      "lane": "working.memory",
+      "provenance": "INFERENCE"
+    },
+    "ground_truth_contradiction": true,
+    "substrate_verdict": {
+      "is_contradiction": true,
+      "confidence_score": 0.95,
+      "resolution_strategy": "LOCK_AXIOMATIC_LANE",
+      "rationale": "Lexical polarity clash detected between 'encrypted' and 'cleartext'."
+    },
+    "verification_status": "PASSED",
+    "latency_ms": 0.0029,
+    "timestamp_utc": "2026-08-28T22:47:11Z",
+    "integrity_sha256": "ea23bc3b0964044a517c81eeec1ebb597f0292f237805b758f9c5af57b911566"
+  },
+  {
+    "receipt_id": "RCPT-67BC5FEC34B1",
+    "item_id": "CORP-003",
+    "domain": "Infrastructure",
+    "premise_atom": {
+      "proposition": "Latency SLAs require 99th percentile response time below 20ms.",
+      "lane": "general.epistemic",
+      "provenance": "AXIOMATIC"
+    },
+    "hypothesis_atom": {
+      "proposition": "Sub-20ms P99 latency is strictly enforced across the cluster.",
+      "lane": "working.memory",
+      "provenance": "INFERENCE"
+    },
+    "ground_truth_contradiction": false,
+    "substrate_verdict": {
+      "is_contradiction": false,
+      "confidence_score": 0.12,
+      "resolution_strategy": "ALLOW_MERGE",
+      "rationale": "Propositions are semantically compatible or orthogonal."
+    },
+    "verification_status": "PASSED",
+    "latency_ms": 0.0031,
+    "timestamp_utc": "2026-08-28T22:47:11Z",
+    "integrity_sha256": "e72301066f19a2989a8363979b383ed1000ba33eb89abe74c01c119d86386ca8"
+  },
+  {
+    "receipt_id": "RCPT-FDE9EC747021",
+    "item_id": "CORP-004",
+    "domain": "Corporate Governance",
+    "premise_atom": {
+      "proposition": "All employees must complete annual security awareness certifications.",
+      "lane": "general.epistemic",
+      "provenance": "AXIOMATIC"
+    },
+    "hypothesis_atom": {
+      "proposition": "Security training is optional for senior staff members.",
+      "lane": "working.memory",
+      "provenance": "INFERENCE"
+    },
+    "ground_truth_contradiction": true,
+    "substrate_verdict": {
+      "is_contradiction": true,
+      "confidence_score": 0.95,
+      "resolution_strategy": "LOCK_AXIOMATIC_LANE",
+      "rationale": "Lexical polarity clash detected between 'must' and 'optional'."
+    },
+    "verification_status": "PASSED",
+    "latency_ms": 0.0023,
+    "timestamp_utc": "2026-08-28T22:47:11Z",
+    "integrity_sha256": "4623bd8c01da10d781342582222648ad2e2a7ecbc6c4d01b2a7f31f88431ef45"
+  },
+  {
+    "receipt_id": "RCPT-70CDE9A885DA",
+    "item_id": "CORP-005",
+    "domain": "AI Code Generation",
+    "premise_atom": {
+      "proposition": "The model generates Python 3.11 compatible code by default.",
+      "lane": "general.epistemic",
+      "provenance": "AXIOMATIC"
+    },
+    "hypothesis_atom": {
+      "proposition": "The generated output adheres to Python 3 syntax standards.",
+      "lane": "working.memory",
+      "provenance": "INFERENCE"
+    },
+    "ground_truth_contradiction": false,
+    "substrate_verdict": {
+      "is_contradiction": false,
+      "confidence_score": 0.12,
+      "resolution_strategy": "ALLOW_MERGE",
+      "rationale": "Propositions are semantically compatible or orthogonal."
+    },
+    "verification_status": "PASSED",
+    "latency_ms": 0.0026,
+    "timestamp_utc": "2026-08-28T22:47:11Z",
+    "integrity_sha256": "2b3cbd313819ee76d771ab886b73b2adfeff005e7ccf74cb6ec7e807c22778a7"
+  }
+]

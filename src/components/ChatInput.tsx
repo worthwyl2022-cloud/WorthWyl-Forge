@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { ArrowUp, Sparkles, Image as ImageIcon, Video as VideoIcon, Mic, Music, Paperclip, X, Settings2, Sliders, Monitor, Zap } from "lucide-react";
+import { ArrowUp, Sparkles, Image as ImageIcon, Video as VideoIcon, Mic, Paperclip, X, Settings2, Sliders, Monitor, Zap } from "lucide-react";
 import { motion, AnimatePresence } from "motion/react";
 import { cn } from "../lib/utils";
 import type { CinematicConfig } from "../lib/gemini";
@@ -34,7 +34,7 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
   useEffect(() => {
     if (textareaRef.current) {
       textareaRef.current.style.height = "auto";
-      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 200)}px`;
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 180)}px`;
     }
   }, [input]);
 
@@ -46,11 +46,11 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
     if (isLoading) return;
 
     if (mode === 'vision') {
-      onGenerateImage(cleanInput || "Generate a stunning visual masterpiece.", cinematicConfig);
+      onGenerateImage(cleanInput || "Generate a cinematic visual masterpiece.", cinematicConfig);
       setInput("");
       setSelectedImage(null);
     } else if (mode === 'cinematic') {
-      const videoPrompt = cleanInput || (selectedImage ? "Animate this scene with cinematic movement and realistic physics." : "");
+      const videoPrompt = cleanInput || (selectedImage ? "Animate this scene with cinematic camera motion and glowing embers." : "");
       if (videoPrompt) {
         onGenerateVideo(videoPrompt, selectedImage || undefined, cinematicConfig);
         setInput("");
@@ -98,36 +98,38 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
   };
 
   const modes = [
-    { id: 'message', label: 'Message', icon: ArrowUp },
-    { id: 'vision', label: 'Vision', icon: ImageIcon },
-    { id: 'cinematic', label: 'Cinematic', icon: VideoIcon },
-    { id: 'acoustic', label: 'Acoustic', icon: Zap },
+    { id: 'message', label: 'Chat & Reason', icon: ArrowUp },
+    { id: 'vision', label: 'Image (Imagen 3)', icon: ImageIcon },
+    { id: 'cinematic', label: 'Video (Veo 3.1)', icon: VideoIcon },
+    { id: 'acoustic', label: 'Voice / Audio', icon: Mic },
   ] as const;
 
   return (
-    <div className="relative w-full max-w-4xl mx-auto px-4 pb-8">
+    <div className="relative w-full max-w-4xl mx-auto px-4 pb-6">
+      {/* Settings / Config Drawer for Video & Image */}
       <AnimatePresence>
-        {isConfigOpen && (
+        {isConfigOpen && (mode === 'vision' || mode === 'cinematic') && (
           <motion.div 
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 10 }}
-            className="mb-4 bg-sleek-surface border border-sleek-border p-4 rounded-xl shadow-2xl grid grid-cols-2 lg:grid-cols-4 gap-4"
+            initial={{ opacity: 0, y: 10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.98 }}
+            className="mb-3 glossy-panel p-4 grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs"
           >
-            <div className="space-y-2">
-              <label className="text-[8px] font-black uppercase text-sleek-muted tracking-widest flex items-center gap-1.5">
-                <Monitor size={10} /> Aspect Ratio
+            <div className="space-y-1.5">
+              <label className="text-[9px] font-black uppercase text-amber-300 tracking-wider flex items-center gap-1">
+                <Monitor size={11} /> Aspect Ratio
               </label>
-              <div className="flex gap-1">
+              <div className="grid grid-cols-2 gap-1">
                 {(["16:9", "4:3", "1:1", "9:16"] as const).map(ratio => (
                   <button 
                     key={ratio}
+                    type="button"
                     onClick={() => setCinematicConfig(prev => ({ ...prev, aspectRatio: ratio as any }))}
                     className={cn(
-                      "flex-1 py-1 rounded border text-[9px] font-bold transition-all",
+                      "py-1 rounded-lg border text-[10px] font-bold transition-all",
                       cinematicConfig.aspectRatio === ratio 
-                        ? "bg-sleek-accent text-white border-sleek-accent" 
-                        : "bg-black/20 border-white/10 text-sleek-muted hover:text-white"
+                        ? "bg-amber-500 text-black border-amber-400 font-black shadow-[0_0_10px_rgba(245,158,11,0.4)]" 
+                        : "bg-black/30 border-white/10 text-sleek-muted hover:text-white"
                     )}
                   >
                     {ratio}
@@ -136,20 +138,21 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[8px] font-black uppercase text-sleek-muted tracking-widest flex items-center gap-1.5">
-                <Sliders size={10} /> Motion
+            <div className="space-y-1.5">
+              <label className="text-[9px] font-black uppercase text-amber-300 tracking-wider flex items-center gap-1">
+                <Sliders size={11} /> Motion Dynamics
               </label>
-              <div className="flex gap-1">
+              <div className="grid grid-cols-3 gap-1">
                 {(["low", "medium", "high"] as const).map(m => (
                   <button 
                     key={m}
+                    type="button"
                     onClick={() => setCinematicConfig(prev => ({ ...prev, motion: m }))}
                     className={cn(
-                      "flex-1 py-1 rounded border text-[9px] font-bold transition-all capitalize",
+                      "py-1 rounded-lg border text-[10px] font-bold transition-all capitalize",
                       cinematicConfig.motion === m 
-                        ? "bg-sleek-accent text-white border-sleek-accent" 
-                        : "bg-black/20 border-white/10 text-sleek-muted hover:text-white"
+                        ? "bg-amber-500 text-black border-amber-400 font-black shadow-[0_0_10px_rgba(245,158,11,0.4)]" 
+                        : "bg-black/30 border-white/10 text-sleek-muted hover:text-white"
                     )}
                   >
                     {m}
@@ -158,37 +161,38 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
               </div>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[8px] font-black uppercase text-sleek-muted tracking-widest flex items-center gap-1.5">
-                <Sparkles size={10} /> Render Style
+            <div className="space-y-1.5">
+              <label className="text-[9px] font-black uppercase text-amber-300 tracking-wider flex items-center gap-1">
+                <Sparkles size={11} /> Visual Style
               </label>
               <select 
                 value={cinematicConfig.style}
                 onChange={(e) => setCinematicConfig(prev => ({ ...prev, style: e.target.value as any }))}
-                className="w-full bg-black/20 border border-white/10 rounded px-2 py-1 text-[9px] font-bold text-white focus:outline-none focus:border-sleek-accent"
+                className="w-full bg-black/40 border border-white/10 rounded-lg px-2 py-1.5 text-[10px] font-bold text-white focus:outline-none focus:border-amber-400"
               >
-                <option value="cinematic">Cinematic</option>
-                <option value="photorealistic">Photorealistic</option>
-                <option value="cyberpunk">Cyberpunk</option>
-                <option value="brutalist">Brutalist</option>
-                <option value="anime">Anime</option>
+                <option value="cinematic">Cinematic Flare</option>
+                <option value="photorealistic">Photorealistic 8K</option>
+                <option value="cyberpunk">Fiery Cyberpunk</option>
+                <option value="brutalist">Dark Moody</option>
+                <option value="anime">Cinematic Anime</option>
               </select>
             </div>
 
-            <div className="space-y-2">
-              <label className="text-[8px] font-black uppercase text-sleek-muted tracking-widest flex items-center gap-1.5">
-                <Zap size={10} /> Precision
+            <div className="space-y-1.5">
+              <label className="text-[9px] font-black uppercase text-amber-300 tracking-wider flex items-center gap-1">
+                <Zap size={11} /> Precision
               </label>
-              <div className="flex gap-1">
+              <div className="grid grid-cols-3 gap-1">
                 {(["standard", "high", "ultra"] as const).map(q => (
                   <button 
                     key={q}
+                    type="button"
                     onClick={() => setCinematicConfig(prev => ({ ...prev, quality: q }))}
                     className={cn(
-                      "flex-1 py-1 rounded border text-[9px] font-bold transition-all capitalize",
+                      "py-1 rounded-lg border text-[10px] font-bold transition-all capitalize",
                       cinematicConfig.quality === q 
-                        ? "bg-sleek-accent text-white border-sleek-accent" 
-                        : "bg-black/20 border-white/10 text-sleek-muted hover:text-white"
+                        ? "bg-amber-500 text-black border-amber-400 font-black shadow-[0_0_10px_rgba(245,158,11,0.4)]" 
+                        : "bg-black/30 border-white/10 text-sleek-muted hover:text-white"
                     )}
                   >
                     {q}
@@ -200,20 +204,21 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
         )}
       </AnimatePresence>
 
+      {/* Attachments Preview */}
       <AnimatePresence>
         {selectedImage && (
           <motion.div 
             initial={{ opacity: 0, y: 10, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="mb-4 relative w-32 h-32 rounded-xl overflow-hidden border-2 border-sleek-accent/50 shadow-xl"
+            className="mb-3 relative inline-block rounded-2xl overflow-hidden border border-amber-500/50 shadow-2xl"
           >
-            <img src={selectedImage} alt="Attachment" className="w-full h-full object-cover" />
+            <img src={selectedImage} alt="Attachment" className="w-24 h-24 object-cover" />
             <button 
               onClick={() => setSelectedImage(null)}
-              className="absolute top-1 right-1 p-1 bg-black/60 rounded-full text-white hover:bg-red-500 transition-colors"
+              className="absolute top-1.5 right-1.5 p-1 bg-black/70 rounded-full text-white hover:bg-red-500 transition-colors"
             >
-              <X size={14} />
+              <X size={12} />
             </button>
           </motion.div>
         )}
@@ -223,18 +228,18 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
             initial={{ opacity: 0, y: 10, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, scale: 0.9 }}
-            className="mb-4 relative p-4 bg-sleek-surface border border-sleek-accent/30 rounded-xl flex items-center gap-3 w-64 shadow-xl"
+            className="mb-3 inline-flex items-center gap-3 p-3 bg-[#111116] border border-amber-500/30 rounded-2xl shadow-xl"
           >
-            <div className="w-10 h-10 rounded-full bg-sleek-accent flex items-center justify-center text-white">
-              <Mic size={18} />
+            <div className="w-8 h-8 rounded-full bg-amber-500 flex items-center justify-center text-black font-black">
+              <Mic size={15} />
             </div>
-            <div className="flex-1 overflow-hidden">
-              <div className="text-[10px] font-black uppercase tracking-widest text-sleek-accent truncate">Audio Blueprint</div>
-              <div className="text-[8px] text-sleek-muted uppercase font-bold">Signal Attached</div>
+            <div>
+              <div className="text-[10px] font-black uppercase text-amber-300">Audio Signal Attached</div>
+              <div className="text-[9px] text-sleek-muted">Ready for processing</div>
             </div>
             <button 
               onClick={() => setSelectedAudio(null)}
-              className="p-1 bg-black/20 rounded-full text-sleek-muted hover:text-red-500 transition-colors"
+              className="p-1 text-sleek-muted hover:text-red-400 transition-colors"
             >
               <X size={14} />
             </button>
@@ -242,64 +247,62 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
         )}
       </AnimatePresence>
 
-      <div className="flex items-center gap-2 mb-3">
-        <div className="flex bg-sleek-surface p-1 rounded-lg border border-sleek-border items-center overflow-x-auto no-scrollbar">
-          {modes.map((m) => (
-            <button
-              key={m.id}
-              onClick={() => {
-                setMode(m.id);
-                if (m.id === 'acoustic' && selectedImage) setSelectedImage(null);
-                if (m.id !== 'acoustic' && selectedAudio) setSelectedAudio(null);
-              }}
-              className={cn(
-                "flex items-center gap-2 px-3 py-1.5 rounded-md text-[9px] font-black uppercase tracking-[0.1em] transition-all whitespace-nowrap",
-                mode === m.id 
-                  ? "bg-sleek-accent text-white shadow-lg" 
-                  : "text-sleek-muted hover:text-white"
-              )}
-            >
-              <m.icon size={12} />
-              {m.label}
-            </button>
-          ))}
+      {/* Mode Switcher Pill Bar */}
+      <div className="flex items-center justify-between gap-2 mb-2 px-1">
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
+          {modes.map((m) => {
+            const Icon = m.icon;
+            const isActive = mode === m.id;
+            return (
+              <button
+                key={m.id}
+                type="button"
+                onClick={() => {
+                  setMode(m.id);
+                  if (m.id === 'acoustic' && selectedImage) setSelectedImage(null);
+                  if (m.id !== 'acoustic' && selectedAudio) setSelectedAudio(null);
+                }}
+                className={cn(
+                  "flex items-center gap-1.5 px-3 py-1 rounded-full text-[10px] font-black tracking-wide transition-all whitespace-nowrap cursor-pointer",
+                  isActive 
+                    ? "bg-gradient-to-r from-amber-500 to-orange-600 text-black font-black shadow-[0_0_15px_rgba(245,158,11,0.4)]" 
+                    : "bg-white/[0.04] text-sleek-muted hover:text-white hover:bg-white/[0.08] border border-white/5"
+                )}
+              >
+                <Icon size={12} className={isActive ? "text-black" : "text-amber-400"} />
+                <span>{m.label}</span>
+              </button>
+            );
+          })}
         </div>
-        
-        <div className="w-[1px] h-4 bg-white/10 mx-1 shrink-0" />
-        
-        <div className="flex gap-1.5">
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            disabled={isLoading}
-            className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-sleek-surface border border-sleek-border text-[9px] font-black uppercase tracking-[0.1em] text-sleek-muted hover:text-white hover:border-sleek-accent/50 transition-all disabled:opacity-30"
-          >
-            <Paperclip size={12} />
-          </button>
-          
+
+        <div className="flex items-center gap-1.5 shrink-0">
           {(mode === 'vision' || mode === 'cinematic') && (
             <button
+              type="button"
               onClick={() => setIsConfigOpen(!isConfigOpen)}
               className={cn(
-                "flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[9px] font-black uppercase tracking-[0.1em] transition-all",
+                "flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border transition-all cursor-pointer",
                 isConfigOpen 
-                  ? "bg-sleek-accent text-white border-sleek-accent" 
-                  : "bg-sleek-surface border-sleek-border text-sleek-muted hover:text-white"
+                  ? "bg-amber-500/20 text-amber-300 border-amber-400" 
+                  : "bg-white/[0.04] text-sleek-muted border-white/10 hover:text-white"
               )}
             >
-              <Settings2 size={12} />
-              Config
+              <Settings2 size={11} />
+              <span>Options</span>
             </button>
           )}
 
           {mode === 'acoustic' && (
-            <div className="flex bg-sleek-surface p-1 rounded-lg border border-sleek-border gap-1">
-              {(["song", "voice", "sfx"] as const).map(t => (
+            <div className="flex items-center bg-white/[0.04] p-0.5 rounded-full border border-white/10">
+              {(["voice", "song", "sfx"] as const).map(t => (
                 <button
                   key={t}
+                  type="button"
                   onClick={() => setAudioType(t)}
                   className={cn(
-                    "px-2 py-0.5 rounded text-[8px] font-black uppercase tracking-widest transition-all",
-                    audioType === t ? "bg-sleek-accent text-white" : "text-sleek-muted hover:text-white"
+                    "px-2 py-0.5 rounded-full text-[9px] font-black uppercase tracking-wider transition-all",
+                    audioType === t ? "bg-amber-500 text-black font-bold" : "text-sleek-muted hover:text-white"
                   )}
                 >
                   {t}
@@ -308,17 +311,21 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
             </div>
           )}
         </div>
-
-        <input 
-          type="file" 
-          ref={fileInputRef} 
-          onChange={handleFileChange} 
-          accept="image/*,audio/*" 
-          className="hidden" 
-        />
       </div>
 
-      <div className="relative bg-sleek-bg border border-sleek-border p-1 pr-12 focus-within:border-sleek-accent/50 transition-all duration-300 group shadow-lg">
+      {/* Main Rounded Input Box */}
+      <div className="relative flex items-end gap-2 bg-[#0c0c12]/90 border border-white/12 focus-within:border-amber-500/60 rounded-2xl p-2 pl-3 shadow-[0_10px_35px_rgba(0,0,0,0.6),inset_0_1px_0_rgba(255,255,255,0.1)] transition-all">
+        {/* Attachment Button */}
+        <button
+          type="button"
+          onClick={() => fileInputRef.current?.click()}
+          disabled={isLoading}
+          className="p-2.5 rounded-xl text-sleek-muted hover:text-amber-400 hover:bg-white/5 transition-all disabled:opacity-30 cursor-pointer shrink-0"
+          title="Attach Image or Audio file"
+        >
+          <Paperclip size={18} />
+        </button>
+
         <textarea
           ref={textareaRef}
           rows={1}
@@ -326,22 +333,25 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
           placeholder={
-            mode === 'message' ? "ENTER SYSTEM COMMAND..." :
-            mode === 'vision' ? (selectedImage ? "SIGNAL ATTACHED. DESCRIBE MODIFICATIONS..." : "DESCRIBE VISUAL SYNTHESIS...") :
-            mode === 'cinematic' ? (selectedImage ? "PHOTO DETECTED. DESCRIBE HOW IT SHOULD MOVE..." : "DESCRIBE CINEMATIC SEQUENCE...") :
-            "DESCRIBE ACOUSTIC SIGNAL OR SONG..."
+            mode === 'message' ? "Ask WorthWyl AI or describe what you want to create..." :
+            mode === 'vision' ? (selectedImage ? "Describe how to reimagine this image..." : "Describe the image you want Imagen 3 to forge...") :
+            mode === 'cinematic' ? (selectedImage ? "Describe camera motion and scene evolution..." : "Describe the video scene you want Veo to render...") :
+            "Describe the voice narration, music, or sound fx to generate..."
           }
-          className="w-full bg-transparent border-none focus:ring-0 text-sleek-text placeholder-sleek-muted/20 py-3 px-4 resize-none min-h-[44px] custom-scrollbar text-sm uppercase tracking-wider font-mono"
+          className="flex-1 bg-transparent border-none focus:ring-0 text-white placeholder-white/30 py-2.5 px-2 resize-none min-h-[44px] custom-scrollbar text-sm leading-relaxed"
           disabled={isLoading}
         />
+
+        {/* Submit / Action Button */}
         <button
-          onClick={handleSubmit}
-          disabled={(mode === 'message' && !input.trim() && !selectedImage) || (mode !== 'message' && mode !== 'acoustic' && !selectedImage && !input.trim()) || (mode === 'acoustic' && !input.trim()) || isLoading}
+          type="button"
+          onClick={() => handleSubmit()}
+          disabled={(mode === 'message' && !input.trim() && !selectedImage && !selectedAudio) || (mode !== 'message' && mode !== 'acoustic' && !selectedImage && !input.trim()) || (mode === 'acoustic' && !input.trim()) || isLoading}
           className={cn(
-            "absolute right-2 bottom-2 p-2 rounded-lg transition-all duration-300",
-            ((input.trim() || selectedImage) && !isLoading)
-              ? "bg-sleek-accent text-white shadow-[0_0_15px_rgba(59,130,246,0.5)] scale-100"
-              : "bg-sleek-surface text-sleek-muted scale-95 opacity-50"
+            "p-3 rounded-xl transition-all duration-200 cursor-pointer shrink-0",
+            ((input.trim() || selectedImage || selectedAudio) && !isLoading)
+              ? "glossy-btn-amber text-black shadow-[0_0_20px_rgba(245,158,11,0.5)] scale-100"
+              : "bg-white/[0.06] text-white/30 scale-95 cursor-not-allowed"
           )}
         >
           {isLoading ? (
@@ -352,31 +362,17 @@ export function ChatInput({ onSend, onGenerateImage, onGenerateVideo, onGenerate
               <Sparkles size={18} />
             </motion.div>
           ) : (
-            <motion.div
-              animate={mode !== 'message' ? { scale: [1, 1.2, 1] } : {}}
-              transition={{ repeat: Infinity, duration: 2 }}
-            >
-              {mode === 'message' ? <ArrowUp size={18} /> : 
-               mode === 'vision' ? <ImageIcon size={18} /> : 
-               mode === 'cinematic' ? <VideoIcon size={18} /> :
-               audioType === 'song' ? <Music size={18} /> : <Mic size={18} />}
-            </motion.div>
+            <ArrowUp size={18} />
           )}
         </button>
-      </div>
-      <div className="mt-4 flex items-center justify-between px-1">
-        <div className="flex gap-4 text-[9px] uppercase tracking-[0.2em] text-sleek-muted font-bold">
-          <span className="flex items-center gap-1.5">
-            <div className="w-1 h-1 rounded-full bg-sleek-accent animate-pulse" />
-            Encryption Active
-          </span>
-          <span className="flex items-center gap-1.5 opacity-50">
-            Node Cluster Alpha
-          </span>
-        </div>
-        <div className="text-[9px] uppercase tracking-[0.2em] text-sleek-muted font-bold opacity-50">
-          Uptime 99.98%
-        </div>
+
+        <input 
+          type="file" 
+          ref={fileInputRef} 
+          onChange={handleFileChange} 
+          accept="image/*,audio/*" 
+          className="hidden" 
+        />
       </div>
     </div>
   );

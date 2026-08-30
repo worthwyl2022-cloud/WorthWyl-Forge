@@ -1,6 +1,6 @@
 {
   "name": "WorthWyl OS v. 2",
-  "description": "A high-performance AI Forge for advanced reasoning, visual synthesis, and cinematic video generation.",
+  "description": "WorthWyl OS Novel Engine — Long-form AI fiction authoring with episodic memory, visual-text coherence, continuity tracking, and multimodal media forge.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

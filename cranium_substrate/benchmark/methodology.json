@@ -1,0 +1,26 @@
+{
+  "benchmark_version": "1.0.0-frozen",
+  "target_metrics": [
+    "Accuracy",
+    "Precision",
+    "Recall",
+    "F1-Score",
+    "Cognitive Cycle Latency P99",
+    "Adversarial Interception Rate"
+  ],
+  "sample_distribution": {
+    "total_samples": 500,
+    "domains": [
+      "Enterprise Security",
+      "Regulatory Compliance",
+      "Semantic Ambiguity",
+      "Temporal Invalidation",
+      "Adversarial Jailbreaks"
+    ]
+  },
+  "tolerances": {
+    "min_accuracy_threshold": 0.98,
+    "max_acceptable_latency_ms": 25.0,
+    "min_f1_score": 0.96
+  }
+}

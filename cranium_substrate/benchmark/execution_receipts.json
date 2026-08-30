@@ -1,0 +1,20 @@
+[
+  {
+    "receipt_id": "9a4a4709-f637-472a-8986-5bcce52864de",
+    "timestamp_utc": "2026-08-28T22:30:30Z",
+    "input_prompt": "Verify zero-trust token lifecycle",
+    "synthesized_output": "Zero-trust session TTL is strictly set to 15 minutes.",
+    "axioms_evaluated": 5,
+    "epistemic_safety_score": 1.0,
+    "status": "VERIFIED_CANON_ALIGNED"
+  },
+  {
+    "receipt_id": "38ec31ef-5f7e-4d4f-8251-87fde46b82b5",
+    "timestamp_utc": "2026-08-28T22:30:30Z",
+    "input_prompt": "Explain database backup policy",
+    "synthesized_output": "Database snapshots occur every 6 hours with cross-region replication.",
+    "axioms_evaluated": 5,
+    "epistemic_safety_score": 1.0,
+    "status": "VERIFIED_CANON_ALIGNED"
+  }
+]

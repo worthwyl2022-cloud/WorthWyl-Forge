@@ -1,0 +1,37 @@
+[
+  {
+    "id": "CORP-001",
+    "premise": "The system allows full guest checkout without authentication.",
+    "hypothesis": "The system prohibits unauthenticated users from making purchases.",
+    "isContradiction": true,
+    "domain": "Enterprise Security"
+  },
+  {
+    "id": "CORP-002",
+    "premise": "Customer data is encrypted at rest using AES-256 GCM keys.",
+    "hypothesis": "Data in the primary database is stored in cleartext.",
+    "isContradiction": true,
+    "domain": "Compliance"
+  },
+  {
+    "id": "CORP-003",
+    "premise": "Latency SLAs require 99th percentile response time below 20ms.",
+    "hypothesis": "Sub-20ms P99 latency is strictly enforced across the cluster.",
+    "isContradiction": false,
+    "domain": "Infrastructure"
+  },
+  {
+    "id": "CORP-004",
+    "premise": "All employees must complete annual security awareness certifications.",
+    "hypothesis": "Security training is optional for senior staff members.",
+    "isContradiction": true,
+    "domain": "Corporate Governance"
+  },
+  {
+    "id": "CORP-005",
+    "premise": "The model generates Python 3.11 compatible code by default.",
+    "hypothesis": "The generated output adheres to Python 3 syntax standards.",
+    "isContradiction": false,
+    "domain": "AI Code Generation"
+  }
+]
