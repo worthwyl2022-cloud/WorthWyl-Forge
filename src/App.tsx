@@ -26,13 +26,18 @@ import {
   Share2,
   Film,
   BookOpen,
-  Compass
+  Compass,
+  Play,
+  Lock,
+  Key
 } from "lucide-react";
 import { ChatInput } from "./components/ChatInput";
 import { ChatMessage } from "./components/ChatMessage";
 import { MetacognitiveTracker } from "./components/MetacognitiveTracker";
 import { WriterForge } from "./components/WriterForge";
 import { NovelEngine } from "./components/NovelEngine";
+import { SelfDrivingDemoPlayer } from "./components/SelfDrivingDemoPlayer";
+import { InteractiveAppTour } from "./components/InteractiveAppTour";
 import brandBanner from "./assets/images/worthwyl_media_banner_1787985483443.jpg";
 import brandAvatar from "./assets/images/worthwyl_media_avatar_1787985497415.jpg";
 import { streamChat, generateImage, generateVideo, generateAudio, type ChatMessage as ChatMessageType, type CinematicConfig } from "./lib/gemini";
@@ -85,6 +90,15 @@ export default function App() {
   const [isHistoryOpen, setIsHistoryOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasCopiedMd, setHasCopiedMd] = useState(false);
+  const [isDemoOpen, setIsDemoOpen] = useState(false);
+  const [isInteractiveTourOpen, setIsInteractiveTourOpen] = useState(false);
+  
+  // Diligence Portal Gate State
+  const [portalKey, setPortalKey] = useState(() => localStorage.getItem("cranium_custom_password") || "CRANIUM2026");
+  const [isGateEnabled, setIsGateEnabled] = useState(() => localStorage.getItem("cranium_gate_enabled") !== "disabled");
+  const [isEditingPortalKey, setIsEditingPortalKey] = useState(false);
+  const [newPortalKeyInput, setNewPortalKeyInput] = useState("");
+  const [portalKeyFeedback, setPortalKeyFeedback] = useState("");
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
@@ -354,9 +368,9 @@ export default function App() {
   return (
     <div className="min-h-screen flex flex-col bg-[#050508] text-white">
       {/* Top Navigation Bar */}
-      <header className="h-16 border-b border-white/10 flex items-center justify-between px-4 sm:px-6 bg-[#08080c]/90 backdrop-blur-2xl sticky top-0 z-40">
+      <header className="min-h-16 py-2 border-b border-white/10 flex items-center justify-between px-3 sm:px-6 bg-[#08080c]/90 backdrop-blur-2xl sticky top-0 z-40 gap-2 flex-wrap sm:flex-nowrap">
         {/* Brand Logo & Name */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
           <div 
             className="relative cursor-pointer group"
             onClick={() => setActiveView('studio')}
@@ -365,83 +379,108 @@ export default function App() {
             <img 
               src={brandAvatar} 
               alt="WorthWyl Media" 
-              className="w-10 h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-all"
+              className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.4)] group-hover:scale-105 transition-all"
             />
             <div className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 rounded-full bg-amber-400 border border-black animate-pulse" />
           </div>
 
           <div className="flex flex-col">
-            <h1 className="text-sm sm:text-base font-black tracking-wider worthwyl-brand-title flex items-center gap-2">
-              WORTHWYL MEDIA
+            <h1 className="text-xs sm:text-base font-black tracking-wider worthwyl-brand-title flex items-center gap-1.5 sm:gap-2">
+              WORTHWYL
             </h1>
-            <span className="text-[9px] font-mono tracking-widest text-amber-400/80 -mt-0.5 uppercase hidden sm:block">
+            <span className="text-[8px] sm:text-[9px] font-mono tracking-widest text-amber-400/80 -mt-0.5 uppercase hidden md:block">
               Media WorthWyl • AI Studio
             </span>
           </div>
         </div>
 
-        {/* Center Mode Switcher Tabs */}
-        <nav className="flex items-center bg-black/40 p-1 rounded-full border border-white/10 shadow-inner">
+        {/* Center Mode Switcher Tabs (Scrollable on Android/Mobile) */}
+        <nav className="flex items-center bg-black/40 p-1 rounded-full border border-white/10 shadow-inner overflow-x-auto max-w-full custom-scrollbar py-1 shrink-0 order-3 sm:order-2">
           <button 
             onClick={() => setActiveView('novel')}
             className={cn(
-              "flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer",
+              "flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap",
               activeView === 'novel' 
                 ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-amber-500 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]" 
                 : "text-sleek-muted hover:text-white"
             )}
           >
             <Compass size={13} className={activeView === 'novel' ? "text-white" : "text-indigo-400"} />
-            <span>Novel Engine v3</span>
+            <span className="hidden xs:inline">Novel Engine</span>
+            <span className="xs:hidden">Novel</span>
           </button>
 
           <button 
             onClick={() => setActiveView('studio')}
             className={cn(
-              "flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer",
+              "flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap",
               activeView === 'studio' 
                 ? "bg-gradient-to-r from-amber-500 to-orange-600 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]" 
                 : "text-sleek-muted hover:text-white"
             )}
           >
             <Sparkles size={13} className={activeView === 'studio' ? "text-black" : "text-amber-400"} />
-            <span>AI Studio</span>
+            <span>Studio</span>
           </button>
 
           <button 
             onClick={() => setActiveView('writer')}
             className={cn(
-              "flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer",
+              "flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap",
               activeView === 'writer' 
                 ? "bg-gradient-to-r from-amber-500 to-orange-600 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]" 
                 : "text-sleek-muted hover:text-white"
             )}
           >
             <BookOpen size={13} className={activeView === 'writer' ? "text-black" : "text-amber-400"} />
-            <span>Script & Writer</span>
+            <span className="hidden xs:inline">Script & Writer</span>
+            <span className="xs:hidden">Writer</span>
           </button>
 
           <button 
             onClick={() => setActiveView('tracker')}
             className={cn(
-              "flex items-center gap-1.5 px-3 sm:px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-wider transition-all cursor-pointer",
+              "flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-4 py-1.5 rounded-full text-[11px] sm:text-xs font-black uppercase tracking-wider transition-all cursor-pointer whitespace-nowrap",
               activeView === 'tracker' 
                 ? "bg-gradient-to-r from-amber-500 to-orange-600 text-black shadow-[0_0_15px_rgba(245,158,11,0.4)]" 
                 : "text-sleek-muted hover:text-white"
             )}
           >
             <Brain size={13} className={activeView === 'tracker' ? "text-black" : "text-amber-400"} />
-            <span>Cognitive Lab</span>
+            <span className="hidden xs:inline">Cognitive Lab</span>
+            <span className="xs:hidden">Lab</span>
           </button>
         </nav>
 
         {/* Right Quick Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2 shrink-0 order-2 sm:order-3">
+          {/* Interactive Guided Tour on Live App */}
+          <button
+            onClick={() => setIsInteractiveTourOpen(true)}
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-gradient-to-r from-indigo-600 via-purple-600 to-amber-600 hover:opacity-90 text-white text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(99,102,241,0.4)] transition-all cursor-pointer"
+            title="Launch Interactive In-App Guided Tour"
+          >
+            <Compass size={12} className="text-white" />
+            <span className="hidden sm:inline">Live Tour</span>
+            <span className="sm:hidden text-[11px]">Tour</span>
+          </button>
+
+          {/* Live 90s Acquisition Demo Button */}
+          <button
+            onClick={() => setIsDemoOpen(true)}
+            className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-black text-xs font-black uppercase tracking-wider shadow-[0_0_15px_rgba(245,158,11,0.4)] transition-all cursor-pointer"
+            title="Launch 90-Second Self-Driving Acquisition Demo"
+          >
+            <Play size={12} className="fill-black" />
+            <span className="hidden sm:inline">Play 90s Demo</span>
+            <span className="sm:hidden text-[11px]">Demo</span>
+          </button>
+
           {/* Deep Thought Toggle */}
           <button
             onClick={() => setIsDeepThinking(!isDeepThinking)}
             className={cn(
-              "hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider border transition-all cursor-pointer",
+              "hidden lg:flex items-center gap-1.5 px-3 py-1.5 rounded-full text-[10px] font-black uppercase tracking-wider border transition-all cursor-pointer",
               isDeepThinking 
                 ? "bg-amber-500/20 text-amber-300 border-amber-400 shadow-[0_0_12px_rgba(245,158,11,0.3)]" 
                 : "bg-white/[0.04] text-sleek-muted border-white/10 hover:text-white"
@@ -812,6 +851,134 @@ export default function App() {
                     </button>
                   </div>
                 </div>
+
+                {/* Diligence Portal Access Control */}
+                <div className="p-4 rounded-xl bg-black/50 border border-amber-500/20 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center gap-2">
+                      <Lock size={15} className="text-amber-400" />
+                      <span className="text-xs font-black uppercase tracking-wider text-white">
+                        Diligence Portal Password Gate
+                      </span>
+                    </div>
+                    <button
+                      onClick={() => {
+                        const nextState = !isGateEnabled;
+                        setIsGateEnabled(nextState);
+                        localStorage.setItem("cranium_gate_enabled", nextState ? "enabled" : "disabled");
+                        if (!nextState) {
+                          localStorage.setItem("cranium_auth_token", "granted");
+                        }
+                      }}
+                      className={cn(
+                        "text-[10px] font-mono font-bold px-2.5 py-1 rounded-full border transition-all cursor-pointer",
+                        isGateEnabled
+                          ? "bg-emerald-950/60 text-emerald-300 border-emerald-500/40"
+                          : "bg-white/5 text-neutral-400 border-white/10"
+                      )}
+                    >
+                      {isGateEnabled ? "GATE: ACTIVE" : "GATE: DISABLED (OPEN)"}
+                    </button>
+                  </div>
+
+                  <p className="text-[11px] text-neutral-400 leading-relaxed">
+                    Controls the authorization lock on your live URL. When enabled, visitors must enter your access key.
+                  </p>
+
+                  {/* Active Key Display & Editor */}
+                  {!isEditingPortalKey ? (
+                    <div className="flex items-center justify-between gap-2 pt-2 border-t border-white/5">
+                      <div className="text-[11px] font-mono text-neutral-300">
+                        Active Key: <code className="text-amber-300 bg-amber-950/60 px-2 py-0.5 rounded border border-amber-500/30 font-bold">{portalKey}</code>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <button
+                          onClick={() => {
+                            setNewPortalKeyInput(portalKey);
+                            setIsEditingPortalKey(true);
+                            setPortalKeyFeedback("");
+                          }}
+                          className="px-2.5 py-1 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 border border-amber-500/30 text-[11px] font-mono text-amber-300 transition-all cursor-pointer"
+                        >
+                          Change Key
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="p-3 rounded-xl bg-black/80 border border-amber-500/40 space-y-2">
+                      <label className="text-[10px] font-mono uppercase tracking-wider text-amber-400 block font-bold">
+                        Set New Access Code:
+                      </label>
+                      <input
+                        type="text"
+                        value={newPortalKeyInput}
+                        onChange={(e) => setNewPortalKeyInput(e.target.value)}
+                        placeholder="Enter 4+ char passcode..."
+                        className="w-full bg-black border border-white/20 focus:border-amber-400 rounded-lg px-3 py-2 text-xs text-white placeholder-neutral-500 font-mono focus:outline-none"
+                      />
+                      <div className="flex items-center justify-between pt-1">
+                        <div className="flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() => {
+                              if (newPortalKeyInput.trim().length < 4) {
+                                setPortalKeyFeedback("Code must be at least 4 characters.");
+                                return;
+                              }
+                              const code = newPortalKeyInput.trim();
+                              localStorage.setItem("cranium_custom_password", code);
+                              setPortalKey(code);
+                              setPortalKeyFeedback("Key saved successfully!");
+                              setTimeout(() => {
+                                setIsEditingPortalKey(false);
+                                setPortalKeyFeedback("");
+                              }, 1200);
+                            }}
+                            className="px-3 py-1 bg-amber-500 hover:bg-amber-400 text-black font-bold text-xs rounded-lg cursor-pointer"
+                          >
+                            Save
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => {
+                              localStorage.removeItem("cranium_custom_password");
+                              setPortalKey("CRANIUM2026");
+                              setPortalKeyFeedback("Reset to default (CRANIUM2026)");
+                              setTimeout(() => {
+                                setIsEditingPortalKey(false);
+                                setPortalKeyFeedback("");
+                              }, 1200);
+                            }}
+                            className="px-2.5 py-1 bg-white/5 hover:bg-white/10 text-neutral-400 hover:text-white text-xs rounded-lg border border-white/10 cursor-pointer"
+                          >
+                            Reset Default
+                          </button>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setIsEditingPortalKey(false);
+                            setPortalKeyFeedback("");
+                          }}
+                          className="text-xs text-neutral-500 hover:text-neutral-300 cursor-pointer"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </div>
+                  )}
+
+                  {portalKeyFeedback && (
+                    <div className={cn(
+                      "text-[11px] p-2 rounded-lg font-mono border",
+                      portalKeyFeedback.includes("success") || portalKeyFeedback.includes("Reset")
+                        ? "bg-emerald-950/40 text-emerald-300 border-emerald-500/30"
+                        : "bg-red-950/40 text-red-300 border-red-500/30"
+                    )}>
+                      {portalKeyFeedback}
+                    </div>
+                  )}
+                </div>
               </div>
 
               <button 
@@ -824,6 +991,24 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Self-Driving Full System Acquisition Demo Player */}
+      <SelfDrivingDemoPlayer
+        isOpen={isDemoOpen}
+        onClose={() => setIsDemoOpen(false)}
+        onLaunchInteractiveTour={() => {
+          setIsDemoOpen(false);
+          setIsInteractiveTourOpen(true);
+        }}
+      />
+
+      {/* Live Interactive In-App Guided Tour */}
+      <InteractiveAppTour
+        isOpen={isInteractiveTourOpen}
+        onClose={() => setIsInteractiveTourOpen(false)}
+        activeView={activeView}
+        onNavigateView={(v) => setActiveView(v)}
+      />
     </div>
   );
 }

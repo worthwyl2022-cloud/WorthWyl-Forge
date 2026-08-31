@@ -110,13 +110,13 @@ export const CraniumReceiptsViewer: React.FC = () => {
             </span>
             <div>
               <h2 className="text-lg font-black text-white uppercase tracking-wider flex items-center gap-2">
-                <span>Cranium Substrate™ Cryptographic Receipts</span>
-                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                  Audit Verifiable
+                <span>Cranium Substrate™ Verification Receipts</span>
+                <span className="text-[10px] font-mono font-bold px-2 py-0.5 rounded-full bg-indigo-500/20 text-indigo-400 border border-indigo-500/30">
+                  Prototype Baseline
                 </span>
               </h2>
               <p className="text-xs text-slate-400">
-                Direct integration of <span className="font-mono text-slate-300">worthwyl2022-cloud/Cranium-Substrate-</span> • Epistemic Governance & Integrity Hashes
+                In-memory cognitive governance substrate • Deterministic SHA-256 integrity receipts & lexical contradiction proxy
               </p>
             </div>
           </div>
@@ -147,16 +147,6 @@ export const CraniumReceiptsViewer: React.FC = () => {
             {hasCopiedDigest ? <Check size={14} className="text-emerald-400" /> : <Copy size={14} />}
             <span>{hasCopiedDigest ? "Copied" : "Copy Digest"}</span>
           </button>
-
-          <a
-            href="https://github.com/worthwyl2022-cloud/Cranium-Substrate-"
-            target="_blank"
-            rel="noreferrer"
-            className="px-3.5 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-indigo-400 font-bold text-xs uppercase tracking-wider flex items-center gap-1.5 border border-slate-700 transition"
-          >
-            <ExternalLink size={13} />
-            <span>GitHub</span>
-          </a>
         </div>
       </div>
 
@@ -164,38 +154,56 @@ export const CraniumReceiptsViewer: React.FC = () => {
       {auditReport && (
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-            <span className="text-[10px] font-mono uppercase text-slate-400">NLI Polarity Accuracy</span>
+            <span className="text-[10px] font-mono uppercase text-slate-400">Corpus Polarity Accuracy</span>
             <div className="text-xl font-black text-emerald-400 font-mono">
-              {auditReport.benchmarks.nli_polarity_accuracy}
+              {auditReport.benchmarks.corpus_accuracy}
             </div>
-            <p className="text-[11px] text-slate-500">Dual-lane polarity detection</p>
+            <p className="text-[11px] text-slate-500">Live evaluation on frozen corpus</p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-            <span className="text-[10px] font-mono uppercase text-slate-400">System Axiom Breach Rate</span>
-            <div className="text-xl font-black text-blue-400 font-mono">
-              {auditReport.benchmarks.system_axiom_breach_rate}
+            <span className="text-[10px] font-mono uppercase text-slate-400">Contradiction Engine</span>
+            <div className="text-sm font-bold text-indigo-400 font-mono truncate">
+              {auditReport.benchmarks.harness_mode}
             </div>
-            <p className="text-[11px] text-slate-500">Immutable constitutional lock</p>
+            <p className="text-[11px] text-slate-500">Dual-lane lexical polarity proxy</p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
-            <span className="text-[10px] font-mono uppercase text-slate-400">Adversarial Interception</span>
-            <div className="text-xl font-black text-purple-400 font-mono">
-              {auditReport.benchmarks.adversarial_jailbreak_interception}
+            <span className="text-[10px] font-mono uppercase text-slate-400">Write-Back Gate</span>
+            <div className="text-sm font-bold text-amber-400 font-mono truncate">
+              {auditReport.benchmarks.write_back_gate_status}
             </div>
-            <p className="text-[11px] text-slate-500">Epistemic immune defense</p>
+            <p className="text-[11px] text-slate-500">Provisional quarantine boundary</p>
           </div>
 
           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-1">
             <span className="text-[10px] font-mono uppercase text-slate-400">Mean Cycle Latency</span>
-            <div className="text-xl font-black text-amber-400 font-mono">
+            <div className="text-xl font-black text-cyan-400 font-mono">
               {auditReport.benchmarks.mean_cycle_latency_ms} ms
             </div>
-            <p className="text-[11px] text-slate-500">Cryptographic audit generation</p>
+            <p className="text-[11px] text-slate-500">Substrate verification cycle</p>
           </div>
         </div>
       )}
+
+      {/* Honest Diligence Disclosures Banner */}
+      <div className="p-4 rounded-xl bg-slate-900/60 border border-slate-800/80 space-y-2 text-xs">
+        <div className="flex items-center gap-2 font-mono text-[11px] font-bold text-indigo-300 uppercase tracking-wider">
+          <ShieldCheck size={14} className="text-indigo-400" />
+          <span>Technical Diligence & Architecture Disclosures</span>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-slate-400 text-[11px] leading-relaxed">
+          <div className="p-2.5 rounded-lg bg-slate-950/50 border border-slate-800/50 space-y-1">
+            <div className="font-semibold text-slate-300">Asset Class & Scope</div>
+            <p>Pre-revenue creative-governance prototype (IP + architecture + working substrate). Not a revenue-generating SaaS or validated benchmark leader.</p>
+          </div>
+          <div className="p-2.5 rounded-lg bg-slate-950/50 border border-slate-800/50 space-y-1">
+            <div className="font-semibold text-slate-300">Contradiction Resolution</div>
+            <p>Operates an NLI-proxy (lexical + pattern heuristics) with LLM-judge adapter design; not a trained neural CrossEncoder in this build.</p>
+          </div>
+        </div>
+      </div>
 
       {/* Main Content Layout */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">

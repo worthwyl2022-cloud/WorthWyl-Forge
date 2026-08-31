@@ -24,7 +24,8 @@ import {
   Download,
   Share2,
   Check,
-  Cpu
+  Cpu,
+  X
 } from "lucide-react";
 import { Novel, Episode, EpisodeSnapshot, ContinuityState } from "../models/domain";
 import { EpisodicMemoryStore } from "../core/memory/EpisodicMemoryStore";
@@ -95,6 +96,9 @@ export function NovelEngine() {
 
   const activeNovel = novels.find((n) => n.id === activeNovelId) || novels[0];
   const activeEpisode = episodes[currentEpisodeIndex] || null;
+
+  const [showMobileSidebar, setShowMobileSidebar] = useState(false);
+  const [showMobileDrawer, setShowMobileDrawer] = useState(false);
 
   // Handle autonomous episode generation loop
   const handleWriteNextEpisode = async () => {
@@ -177,9 +181,26 @@ export function NovelEngine() {
   };
 
   return (
-    <div id="novel-engine-root" className="flex h-full w-full bg-[#0b0f17] text-slate-100 font-sans overflow-hidden">
-      {/* LEFT NAVIGATION: Novels & Episode Hierarchy */}
-      <div className="w-72 bg-[#0d131f]/95 border-r border-slate-800/80 flex flex-col shrink-0">
+    <div id="novel-engine-root" className="flex h-full w-full bg-[#0b0f17] text-slate-100 font-sans overflow-hidden relative">
+      {/* Mobile Backdrop for Drawers */}
+      {(showMobileSidebar || showMobileDrawer) && (
+        <div
+          onClick={() => {
+            setShowMobileSidebar(false);
+            setShowMobileDrawer(false);
+          }}
+          className="fixed inset-0 bg-black/70 backdrop-blur-xs z-30 lg:hidden"
+        />
+      )}
+
+      {/* LEFT NAVIGATION: Novels & Episode Hierarchy (Responsive Drawer on Mobile) */}
+      <div
+        className={cn(
+          "w-72 bg-[#0d131f]/95 border-r border-slate-800/80 flex flex-col shrink-0 transition-transform duration-300 z-40",
+          "fixed inset-y-0 left-0 lg:static lg:translate-x-0",
+          showMobileSidebar ? "translate-x-0 shadow-2xl" : "-translate-x-full"
+        )}
+      >
         {/* Header */}
         <div className="p-4 border-b border-slate-800/80">
           <div className="flex items-center justify-between mb-3">
@@ -192,13 +213,21 @@ export function NovelEngine() {
                 <p className="text-[10px] text-indigo-400 font-mono tracking-wider uppercase">Novel Engine</p>
               </div>
             </div>
-            <button
-              onClick={() => setShowNewNovelModal(true)}
-              className="p-1.5 rounded-md bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 border border-indigo-500/30 transition text-xs flex items-center space-x-1"
-              title="Create New Novel"
-            >
-              <Plus className="w-3.5 h-3.5" />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                onClick={() => setShowNewNovelModal(true)}
+                className="p-1.5 rounded-md bg-indigo-600/20 hover:bg-indigo-600/30 text-indigo-400 border border-indigo-500/30 transition text-xs flex items-center space-x-1"
+                title="Create New Novel"
+              >
+                <Plus className="w-3.5 h-3.5" />
+              </button>
+              <button
+                onClick={() => setShowMobileSidebar(false)}
+                className="lg:hidden p-1.5 rounded-md text-slate-400 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
           </div>
 
           {/* Active Novel Selector */}
@@ -244,7 +273,10 @@ export function NovelEngine() {
               return (
                 <button
                   key={ep.id}
-                  onClick={() => setCurrentEpisodeIndex(idx)}
+                  onClick={() => {
+                    setCurrentEpisodeIndex(idx);
+                    setShowMobileSidebar(false);
+                  }}
                   className={cn(
                     "w-full text-left p-2.5 rounded-lg transition-all flex flex-col space-y-1 text-xs border",
                     isActive
@@ -287,54 +319,73 @@ export function NovelEngine() {
       </div>
 
       {/* CENTER STAGE: Writer Workspace & Manuscript Display */}
-      <div className="flex-1 flex flex-col bg-[#0b0f17] overflow-hidden">
+      <div className="flex-1 flex flex-col min-w-0 bg-[#0b0f17] overflow-hidden">
         {/* Workspace Toolbar */}
-        <div className="h-14 border-b border-slate-800/80 px-6 flex items-center justify-between bg-[#0e1422]/90 backdrop-blur-md">
-          <div className="flex items-center space-x-3">
-            <h2 className="text-base font-bold text-slate-100 tracking-tight flex items-center space-x-2">
-              <span>{activeNovel?.title || "Novel Workspace"}</span>
+        <div className="min-h-14 py-2 border-b border-slate-800/80 px-3 sm:px-6 flex flex-wrap items-center justify-between gap-2 bg-[#0e1422]/90 backdrop-blur-md">
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={() => setShowMobileSidebar(true)}
+              className="lg:hidden p-1.5 rounded-lg bg-[#141d2f] text-slate-300 hover:text-white border border-slate-700/60"
+              title="Open Episodes & Novels"
+            >
+              <BookOpen className="w-4 h-4 text-indigo-400" />
+            </button>
+            <h2 className="text-sm sm:text-base font-bold text-slate-100 tracking-tight flex items-center space-x-2 truncate">
+              <span className="truncate max-w-[140px] sm:max-w-none">{activeNovel?.title || "Novel Workspace"}</span>
               {activeEpisode && (
-                <span className="text-xs px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800/50 font-normal">
-                  Episode {activeEpisode.episodeNumber} of {episodes.length}
+                <span className="text-[10px] sm:text-xs px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800/50 font-normal shrink-0">
+                  Ep {activeEpisode.episodeNumber}
                 </span>
               )}
             </h2>
           </div>
 
-          <div className="flex items-center space-x-3">
+          <div className="flex items-center gap-1.5 sm:gap-2">
             <button
               onClick={handleCopyEpisode}
               disabled={!activeEpisode}
-              className="px-3 py-1.5 rounded-lg bg-[#141d2f] hover:bg-[#1a253c] text-slate-300 text-xs border border-slate-700/60 flex items-center space-x-1.5 transition disabled:opacity-50"
+              className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#141d2f] hover:bg-[#1a253c] text-slate-300 text-xs border border-slate-700/60 flex items-center space-x-1.5 transition disabled:opacity-50"
             >
               {copiedNotification ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <FileText className="w-3.5 h-3.5" />}
-              <span>{copiedNotification ? "Copied" : "Copy Text"}</span>
+              <span className="hidden sm:inline">{copiedNotification ? "Copied" : "Copy"}</span>
             </button>
 
             <button
               onClick={handleExportManuscript}
               disabled={episodes.length === 0}
-              className="px-3 py-1.5 rounded-lg bg-[#141d2f] hover:bg-[#1a253c] text-slate-300 text-xs border border-slate-700/60 flex items-center space-x-1.5 transition disabled:opacity-50"
+              className="px-2.5 sm:px-3 py-1.5 rounded-lg bg-[#141d2f] hover:bg-[#1a253c] text-slate-300 text-xs border border-slate-700/60 flex items-center space-x-1.5 transition disabled:opacity-50"
             >
               <Download className="w-3.5 h-3.5" />
-              <span>Export Manuscript</span>
+              <span className="hidden sm:inline">Export</span>
+            </button>
+
+            {/* Mobile Toggle for Continuity / Snapshots Drawer */}
+            <button
+              onClick={() => setShowMobileDrawer(true)}
+              className="lg:hidden px-2.5 py-1.5 rounded-lg bg-[#141d2f] text-indigo-300 text-xs border border-indigo-800/60 flex items-center space-x-1"
+              title="Continuity & Memory"
+            >
+              <Compass className="w-3.5 h-3.5 text-indigo-400" />
+              <span>Intel</span>
             </button>
 
             {/* Main Cognitive Action */}
             <button
               onClick={handleWriteNextEpisode}
               disabled={isGenerating}
-              className="px-4 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-semibold shadow-lg shadow-indigo-500/25 flex items-center space-x-2 transition disabled:opacity-50"
+              className="px-3 sm:px-4 py-1.5 rounded-lg bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white text-xs font-semibold shadow-lg shadow-indigo-500/25 flex items-center space-x-1.5 sm:space-x-2 transition disabled:opacity-50"
             >
               {isGenerating ? (
                 <>
                   <RefreshCw className="w-3.5 h-3.5 animate-spin" />
-                  <span>Synthesizing...</span>
+                  <span className="hidden sm:inline">Synthesizing...</span>
+                  <span className="sm:hidden">Writing...</span>
                 </>
               ) : (
                 <>
                   <Sparkles className="w-3.5 h-3.5" />
-                  <span>Write Next Episode</span>
+                  <span className="hidden sm:inline">Write Next Episode</span>
+                  <span className="sm:hidden">Write Ep</span>
                 </>
               )}
             </button>
@@ -343,39 +394,39 @@ export function NovelEngine() {
 
         {/* Cognitive Loop Progress Bar */}
         {isGenerating && (
-          <div className="bg-indigo-950/80 border-b border-indigo-800/60 px-6 py-2.5 flex items-center justify-between text-xs text-indigo-200">
-            <div className="flex items-center space-x-2">
-              <Cpu className="w-4 h-4 text-indigo-400 animate-pulse" />
-              <span className="font-mono">{currentLoopStep}</span>
+          <div className="bg-indigo-950/80 border-b border-indigo-800/60 px-4 sm:px-6 py-2 flex items-center justify-between text-xs text-indigo-200">
+            <div className="flex items-center space-x-2 truncate">
+              <Cpu className="w-4 h-4 text-indigo-400 animate-pulse shrink-0" />
+              <span className="font-mono truncate">{currentLoopStep}</span>
             </div>
-            <span className="text-[10px] text-indigo-300 uppercase tracking-widest font-bold">
-              Cognitive Loop Active
+            <span className="text-[9px] sm:text-[10px] text-indigo-300 uppercase tracking-widest font-bold shrink-0 ml-2">
+              Loop Active
             </span>
           </div>
         )}
 
         {/* Author Directive Bar */}
-        <div className="px-6 py-2.5 bg-[#090d15] border-b border-slate-800/60 flex items-center space-x-3">
+        <div className="px-3 sm:px-6 py-2 bg-[#090d15] border-b border-slate-800/60 flex items-center space-x-2 sm:space-x-3">
           <Sliders className="w-4 h-4 text-indigo-400 shrink-0" />
           <input
             type="text"
             value={userDirective}
             onChange={(e) => setUserDirective(e.target.value)}
-            placeholder="Optional Author Directive (e.g. 'Marcus reveals his past connection to the Syndicate, fast pacing')"
+            placeholder="Author Directive (e.g. 'Fast pacing, reveal Syndicate secret')"
             className="flex-1 bg-[#101726] border border-slate-700/60 rounded-md px-3 py-1 text-xs text-slate-200 placeholder:text-slate-500 focus:outline-none focus:border-indigo-500"
           />
         </div>
 
         {/* Reading & Manuscript Page Viewport */}
-        <div className="flex-1 overflow-y-auto p-8 flex justify-center custom-scrollbar">
+        <div className="flex-1 overflow-y-auto p-4 sm:p-8 flex justify-center custom-scrollbar">
           {activeEpisode ? (
-            <div className="max-w-3xl w-full bg-[#0d1320] border border-slate-800 rounded-xl p-8 sm:p-12 shadow-2xl space-y-6 relative">
+            <div className="max-w-3xl w-full bg-[#0d1320] border border-slate-800 rounded-xl p-5 sm:p-12 shadow-2xl space-y-6 relative">
               {/* Manuscript Page Header */}
               <div className="text-center pb-6 border-b border-slate-800/80 space-y-2">
-                <span className="text-[11px] uppercase tracking-widest text-indigo-400 font-mono font-bold">
+                <span className="text-[10px] sm:text-[11px] uppercase tracking-widest text-indigo-400 font-mono font-bold">
                   {activeNovel?.title} • Episode {activeEpisode.episodeNumber}
                 </span>
-                <h3 className="text-2xl font-serif font-bold text-slate-100">
+                <h3 className="text-xl sm:text-2xl font-serif font-bold text-slate-100">
                   {activeEpisode.title || `Chapter ${activeEpisode.episodeNumber}`}
                 </h3>
                 <div className="flex items-center justify-center space-x-4 text-xs text-slate-400 pt-1">
@@ -386,16 +437,16 @@ export function NovelEngine() {
               </div>
 
               {/* Manuscript Body Prose */}
-              <div className="prose prose-invert max-w-none text-slate-300 font-serif leading-relaxed text-[15px] space-y-4">
+              <div className="prose prose-invert max-w-none text-slate-300 font-serif leading-relaxed text-sm sm:text-[15px] space-y-4">
                 {activeEpisode.text.split("\n\n").map((paragraph, pIdx) => (
-                  <p key={pIdx} className="indent-6 leading-7">
+                  <p key={pIdx} className="indent-4 sm:indent-6 leading-relaxed sm:leading-7">
                     {paragraph}
                   </p>
                 ))}
               </div>
 
               {/* Pagination controls */}
-              <div className="pt-8 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
+              <div className="pt-6 sm:pt-8 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-400">
                 <button
                   onClick={() => setCurrentEpisodeIndex((prev) => Math.max(0, prev - 1))}
                   disabled={currentEpisodeIndex === 0}
@@ -418,12 +469,12 @@ export function NovelEngine() {
               </div>
             </div>
           ) : (
-            <div className="flex flex-col items-center justify-center text-center max-w-md my-auto space-y-4 p-8 border border-dashed border-slate-800 rounded-2xl bg-[#0e1424]/40">
-              <div className="w-14 h-14 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 shadow-inner">
-                <Sparkles className="w-7 h-7" />
+            <div className="flex flex-col items-center justify-center text-center max-w-md my-auto space-y-4 p-6 sm:p-8 border border-dashed border-slate-800 rounded-2xl bg-[#0e1424]/40">
+              <div className="w-12 sm:w-14 h-12 sm:h-14 rounded-2xl bg-indigo-950/60 border border-indigo-800/40 flex items-center justify-center text-indigo-400 shadow-inner">
+                <Sparkles className="w-6 sm:w-7 h-6 sm:h-7" />
               </div>
               <div className="space-y-1.5">
-                <h3 className="text-base font-bold text-slate-100">Ready to Begin Novel Generation</h3>
+                <h3 className="text-sm sm:text-base font-bold text-slate-100">Ready to Begin Novel Generation</h3>
                 <p className="text-xs text-slate-400 leading-relaxed">
                   WorthWyl OS v3 orchestrates episodic memory, multimodal screenshots, and continuity tracking into long-form coherence.
                 </p>
@@ -441,10 +492,16 @@ export function NovelEngine() {
         </div>
       </div>
 
-      {/* RIGHT SIDEBAR: Continuity & Episodic Memory Snapshot Center */}
-      <div className="w-80 bg-[#0d131f]/95 border-l border-slate-800/80 flex flex-col shrink-0">
+      {/* RIGHT SIDEBAR: Continuity & Episodic Memory Snapshot Center (Responsive Drawer on Mobile) */}
+      <div
+        className={cn(
+          "w-80 bg-[#0d131f]/95 border-l border-slate-800/80 flex flex-col shrink-0 transition-transform duration-300 z-40",
+          "fixed inset-y-0 right-0 lg:static lg:translate-x-0",
+          showMobileDrawer ? "translate-x-0 shadow-2xl" : "translate-x-full lg:translate-x-0"
+        )}
+      >
         {/* Tab Headers */}
-        <div className="flex border-b border-slate-800/80 bg-[#0a0f18]">
+        <div className="flex border-b border-slate-800/80 bg-[#0a0f18] relative">
           <button
             onClick={() => setActiveSidebarTab("continuity")}
             className={cn(
@@ -480,6 +537,12 @@ export function NovelEngine() {
           >
             <GitBranch className="w-3.5 h-3.5" />
             <span>Threads</span>
+          </button>
+          <button
+            onClick={() => setShowMobileDrawer(false)}
+            className="lg:hidden p-2 text-slate-400 hover:text-white"
+          >
+            <X className="w-4 h-4" />
           </button>
         </div>
 

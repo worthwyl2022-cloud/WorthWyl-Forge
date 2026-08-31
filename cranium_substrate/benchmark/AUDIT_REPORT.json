@@ -1,12 +1,62 @@
 {
-  "title": "Cranium Substrate Epistemic Audit Report",
-  "generated_at": "2026-08-28T22:30:30Z",
-  "status": "ENTERPRISE_READY",
+  "title": "Cranium Substrate Prototype Evaluation Report",
+  "generated_at": "2026-08-31T04:20:01Z",
+  "status": "PROTOTYPE_BASELINE",
+  "harness": "Lexical Proxy v1 on Frozen Corpus",
+  "sample_count": 5,
+  "passed_count": 5,
   "benchmarks": {
-    "nli_polarity_accuracy": "99.4%",
-    "system_axiom_breach_rate": "0.00%",
-    "adversarial_jailbreak_interception": "100.0%",
-    "mean_cycle_latency_ms": 8.42
+    "corpus_accuracy": "100.0%",
+    "mean_cycle_latency_ms": 0.002,
+    "harness_mode": "Lexical Antonym Matcher (NLI Proxy)"
   },
-  "conclusion": "The Cranium Substrate provides strict epistemic containment and robust multi-agent dialectic consensus."
+  "item_results": [
+    {
+      "id": "CORP-001",
+      "domain": "Enterprise Security",
+      "expected": true,
+      "predicted": true,
+      "passed": true,
+      "latency_ms": 0.003
+    },
+    {
+      "id": "CORP-002",
+      "domain": "Compliance",
+      "expected": true,
+      "predicted": true,
+      "passed": true,
+      "latency_ms": 0.002
+    },
+    {
+      "id": "CORP-003",
+      "domain": "Infrastructure",
+      "expected": false,
+      "predicted": false,
+      "passed": true,
+      "latency_ms": 0.002
+    },
+    {
+      "id": "CORP-004",
+      "domain": "Corporate Governance",
+      "expected": true,
+      "predicted": true,
+      "passed": true,
+      "latency_ms": 0.002
+    },
+    {
+      "id": "CORP-005",
+      "domain": "AI Code Generation",
+      "expected": false,
+      "predicted": false,
+      "passed": true,
+      "latency_ms": 0.002
+    }
+  ],
+  "honest_disclosures": {
+    "asset_class": "Pre-revenue creative-governance prototype (IP + architecture + working substrate)",
+    "nli_engine": "Lexical antonym proxy + LLM-judge adapter design; not a trained neural CrossEncoder in this build",
+    "canon_recall": "Baseline proxy evaluated on frozen corpus. Real-model evaluation with frozen corpus is the documented next step.",
+    "write_back_gate": "Evaluation-gated write-back operational in substrate/SubstrateCore.kt"
+  },
+  "conclusion": "Evaluation metrics computed live from frozen corpus. The prototype demonstrates lexical contradiction gating and provisional memory quarantine."
 }

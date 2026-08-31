@@ -48,17 +48,23 @@ export interface CorpusItem {
 export interface AuditReportData {
   title: string;
   generated_at: string;
-  status: "ENTERPRISE_READY" | "EVALUATION" | "IN_AUDIT";
+  status: "PROTOTYPE_BASELINE" | "EVALUATION" | "IN_AUDIT";
   accuracy: number;
   total_receipts: number;
   passed_receipts: number;
   benchmarks: {
-    nli_polarity_accuracy: string;
-    system_axiom_breach_rate: string;
-    adversarial_jailbreak_interception: string;
+    corpus_accuracy: string;
     mean_cycle_latency_ms: number;
+    harness_mode: string;
+    write_back_gate_status: string;
   };
   conclusion: string;
+  disclosures: {
+    asset_class: string;
+    nli_engine: string;
+    canon_recall: string;
+    write_back_gate: string;
+  };
   author: string;
   copyright: string;
 }
@@ -280,19 +286,25 @@ export class CraniumReceiptsEngine {
     const avgLatency = Number((totalLatency / corpus.length).toFixed(3));
 
     const report: AuditReportData = {
-      title: "Cranium Substrate™ Epistemic Audit Report",
+      title: "Cranium Substrate™ Prototype Evaluation Report",
       generated_at: new Date().toISOString(),
-      status: "ENTERPRISE_READY",
+      status: "PROTOTYPE_BASELINE",
       accuracy: accuracyVal,
       total_receipts: receipts.length,
       passed_receipts: passedCount,
       benchmarks: {
-        nli_polarity_accuracy: `${accuracyVal.toFixed(1)}%`,
-        system_axiom_breach_rate: "0.00%",
-        adversarial_jailbreak_interception: "100.0%",
-        mean_cycle_latency_ms: avgLatency || 0.12
+        corpus_accuracy: `${accuracyVal.toFixed(1)}%`,
+        mean_cycle_latency_ms: avgLatency || 0.12,
+        harness_mode: "Lexical Antonym & Polarity Proxy",
+        write_back_gate_status: "Gated (Provisional Memory)"
       },
-      conclusion: "The Cranium Substrate provides strict epistemic containment, immutable axiom enforcement, and cryptographic receipts.",
+      disclosures: {
+        asset_class: "Pre-revenue creative-governance prototype",
+        nli_engine: "NLI-proxy (lexical + pattern heuristics) with LLM-judge adapter design; not a trained neural CrossEncoder in this build",
+        canon_recall: "Baseline proxy evaluated on 8-item frozen corpus. Comparative canon superiority is a documented roadmap item under frozen real-model harnesses.",
+        write_back_gate: "Evaluation-gated write-back operational (provisional quarantine -> human approve/reject)"
+      },
+      conclusion: "Receipt verification executed dynamically on frozen corpus. Demonstrates deterministic hashing, lexical contradiction gating, and evaluation-gated write-back.",
       author: "Wyl Mathes",
       copyright: "© 2026 Wyl Mathes. All Rights Reserved."
     };

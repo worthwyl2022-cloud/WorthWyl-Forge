@@ -414,49 +414,49 @@ export const MetacognitiveTracker: React.FC = () => {
   };
 
   return (
-    <div className="p-6 h-full flex flex-col gap-6 overflow-hidden bg-sleek-dark text-slate-100">
+    <div className="p-3 sm:p-6 h-full flex flex-col gap-4 sm:gap-6 overflow-y-auto custom-scrollbar bg-sleek-dark text-slate-100 min-w-0">
       {/* Top Header Bar */}
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 pb-4 border-b border-sleek-border flex-shrink-0">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-3 pb-3 sm:pb-4 border-b border-sleek-border flex-shrink-0">
         <div className="flex items-center gap-3">
           <img
             src={brandAvatar}
             alt="WorthWyl Media"
-            className="w-10 h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
+            className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl object-cover border border-amber-500/40 shadow-[0_0_20px_rgba(245,158,11,0.3)]"
           />
           <div>
-            <div className="flex items-center gap-2">
-              <h2 className="text-lg font-black uppercase tracking-wider worthwyl-brand-title">
-                Cranium Core™ Cognitive Substrate
+            <div className="flex items-center gap-2 flex-wrap">
+              <h2 className="text-base sm:text-lg font-black uppercase tracking-wider worthwyl-brand-title">
+                Cranium Core™
               </h2>
-              <span className="text-[10px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full font-bold">
+              <span className="text-[9px] sm:text-[10px] font-mono bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full font-bold">
                 v2026.08 Frozen
               </span>
             </div>
-            <p className="text-[11px] text-sleek-muted">
-              Resonance Particle Physics • Dual-Lane NLI Contradiction Gate • 6-Layer Architecture & Governance
+            <p className="text-[10px] sm:text-[11px] text-sleek-muted">
+              Dual-Lane NLI Contradiction Gate • Resonance Field • 6-Layer Governance
             </p>
           </div>
         </div>
 
-        {/* Mode Selector Tabs */}
-        <div className="flex bg-sleek-surface rounded-xl p-1 border border-sleek-border flex-wrap gap-1">
+        {/* Mode Selector Tabs (Responsive Wrap / Horizontal Scroll) */}
+        <div className="flex bg-sleek-surface rounded-xl p-1 border border-sleek-border flex-wrap gap-1 max-w-full overflow-x-auto">
           <button
             onClick={() => setActiveTab('substrate')}
             className={cn(
-              "px-3.5 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer",
+              "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap",
               activeTab === 'substrate'
                 ? "bg-gradient-to-r from-amber-500 to-orange-600 text-black font-black shadow-[0_0_15px_rgba(245,158,11,0.4)]"
                 : "text-sleek-muted hover:text-white"
             )}
           >
             <Activity size={13} />
-            <span>Resonance Field</span>
+            <span>Resonance</span>
           </button>
 
           <button
             onClick={() => setActiveTab('architecture')}
             className={cn(
-              "px-3.5 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer",
+              "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap",
               activeTab === 'architecture'
                 ? "bg-purple-600 text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]"
                 : "text-purple-300 hover:text-white hover:bg-purple-500/10"
@@ -469,20 +469,20 @@ export const MetacognitiveTracker: React.FC = () => {
           <button
             onClick={() => setActiveTab('duallane')}
             className={cn(
-              "px-3.5 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer",
+              "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap",
               activeTab === 'duallane'
                 ? "bg-blue-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.4)]"
                 : "text-blue-300 hover:text-white hover:bg-blue-500/10"
             )}
           >
             <ShieldCheck size={13} />
-            <span>Dual-Lane Deliberation</span>
+            <span>Dual-Lane</span>
           </button>
 
           <button
             onClick={() => setActiveTab('receipts')}
             className={cn(
-              "px-3.5 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer",
+              "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap",
               activeTab === 'receipts'
                 ? "bg-indigo-600 text-white shadow-[0_0_15px_rgba(99,102,241,0.4)]"
                 : "text-indigo-300 hover:text-white hover:bg-indigo-500/10"
@@ -495,27 +495,27 @@ export const MetacognitiveTracker: React.FC = () => {
           <button
             onClick={() => setActiveTab('benchmark')}
             className={cn(
-              "px-3.5 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer",
+              "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap",
               activeTab === 'benchmark'
                 ? "bg-rose-600 text-white shadow-[0_0_15px_rgba(244,63,94,0.4)]"
                 : "text-rose-300 hover:text-white hover:bg-rose-500/10"
             )}
           >
             <BarChart3 size={13} />
-            <span>Drift Benchmark</span>
+            <span>Benchmark</span>
           </button>
 
           <button
             onClick={() => setActiveTab('reflections')}
             className={cn(
-              "px-3.5 py-1.5 rounded-lg text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer",
+              "px-2.5 sm:px-3.5 py-1.5 rounded-lg text-[11px] sm:text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all cursor-pointer whitespace-nowrap",
               activeTab === 'reflections'
                 ? "bg-slate-700 text-white shadow"
                 : "text-sleek-muted hover:text-white"
             )}
           >
             <History size={13} />
-            <span>Metacognitive Log ({reflections.length})</span>
+            <span>Log ({reflections.length})</span>
           </button>
         </div>
       </div>
