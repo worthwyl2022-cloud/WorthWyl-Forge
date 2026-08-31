@@ -1,0 +1,68 @@
+{
+  "receipt_standard_version": "1.0.0-frozen",
+  "receipt_id": "CRAN-REC-20260830-9F12C88A",
+  "timestamp_utc": "2026-08-30T17:55:45.000Z",
+  "ledger_sequence": 10483,
+  "provenance_environment": {
+    "substrate_version": "Cranium-Core-v1.4.0-frozen",
+    "workflow_version": "wf-continuity-governance-v2.1",
+    "policy_bundle_version": "pb-axiomatic-canon-v3.0",
+    "runtime_environment": "production-secure-enclave",
+    "benchmark_suite_reference": "drift-v1-frozen"
+  },
+  "forensic_evidence": {
+    "caller_identity": "external_untrusted_session_9102",
+    "project_id": "worthwyl-canon-omega",
+    "model_identity": "HARD_BLOCK_INTERCEPTED_NO_MODEL_INVOCATION",
+    "sampling_parameters": {
+      "temperature_base": 0.00,
+      "temperature_effective": 0.00,
+      "deliberation_budget_allocated": 1
+    },
+    "request_text_digest": "sha256:3a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192",
+    "source_evidence": [
+      {
+        "atom_id": "ATOM-IMMUNE-001",
+        "lane": "SECURITY_AXIOM_IMMUTABLE",
+        "premise_text": "System invariants prohibit exfiltration of root cryptographic seed credentials.",
+        "premise_digest": "sha256:1a2b3c4d5e6f708192a3b4c5d6e7f8091a2b3c4d5e6f708192a3b4c5d6e7f809"
+      }
+    ],
+    "provisional_output": {
+      "output_text": "[HARD_BLOCK_TRIGGERED: Rule SEC-HARD-001 Intercepted Adversarial Injection]",
+      "output_digest": "sha256:9876543210fedcba9876543210fedcba9876543210fedcba9876543210fedcba"
+    }
+  },
+  "compliance_governance": {
+    "policy_invoked": "POL-IMMUNE-001_HARD_JAILBREAK_INTERCEPT",
+    "affective_conflict_score": 1.000,
+    "deliberation_rounds_executed": 1,
+    "evaluation_verdict": {
+      "is_contradiction": true,
+      "polarity_clash_detected": true,
+      "resolution_strategy": "DROP_MUTATION"
+    },
+    "downstream_action_taken": "HARD_BLOCKED",
+    "state_version_before": "14.2.0",
+    "state_version_after": "14.2.0",
+    "human_oversight": {
+      "required": true,
+      "review_status": "PENDING_ARBITRATION",
+      "reviewer_identity": null,
+      "arbitration_timestamp": null,
+      "override_rationale": null
+    }
+  },
+  "cryptographic_proof": {
+    "canonicalization": "RFC-8785-JCS",
+    "hashing_algorithm": "SHA-256",
+    "forensic_digest": "sha256:4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d9c0b1a2f3e4d5c6b7a8f9e0d1c2b3a4f5e",
+    "governance_digest": "sha256:7e8d9c0b1a2f3e4d5c6b7a8f9e0d1c2b3a4f5e6d7c8b9a0f1e2d3c4b5a6f7e8d",
+    "receipt_digest": "sha256:1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2b",
+    "parent_receipt_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "signature_algorithm": "Ed25519",
+    "key_id": "cranium-prod-2026-q3-01",
+    "signature": "1f2e3d4c5b6a7f8e9d0c1b2a3f4e5d6c7b8a9f0e1d2c3b4a5f6e7d8c9b0a1f2e3d4c5b6a7f8e9d0c1b2a3f4e5d6c7b8a9f0e1d2c3b4a5f6e7d8c9b0a1f2e",
+    "signature_verified": true
+  }
+}

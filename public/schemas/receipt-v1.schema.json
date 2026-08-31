@@ -1,0 +1,217 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://cranium.network/schemas/receipt-v1.0.json",
+  "title": "Cranium Substrate™ Receipt Standard v1.0",
+  "description": "Deterministic JSON Schema for Cranium Governed Cognitive Substrate execution and deliberation records.",
+  "type": "object",
+  "required": [
+    "receipt_standard_version",
+    "receipt_id",
+    "timestamp_utc",
+    "ledger_sequence",
+    "provenance_environment",
+    "forensic_evidence",
+    "compliance_governance",
+    "cryptographic_proof"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "receipt_standard_version": {
+      "type": "string",
+      "enum": ["1.0.0-frozen"]
+    },
+    "receipt_id": {
+      "type": "string",
+      "pattern": "^CRAN-REC-[0-9]{8}-[A-F0-9]{8}$"
+    },
+    "timestamp_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ledger_sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "provenance_environment": {
+      "type": "object",
+      "required": [
+        "substrate_version",
+        "workflow_version",
+        "policy_bundle_version",
+        "runtime_environment",
+        "benchmark_suite_reference"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "substrate_version": { "type": "string" },
+        "workflow_version": { "type": "string" },
+        "policy_bundle_version": { "type": "string" },
+        "runtime_environment": { "type": "string" },
+        "benchmark_suite_reference": { "type": "string" }
+      }
+    },
+    "forensic_evidence": {
+      "type": "object",
+      "required": [
+        "caller_identity",
+        "project_id",
+        "model_identity",
+        "sampling_parameters",
+        "request_text_digest",
+        "source_evidence",
+        "provisional_output"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "caller_identity": { "type": "string" },
+        "project_id": { "type": "string" },
+        "model_identity": { "type": "string" },
+        "sampling_parameters": {
+          "type": "object",
+          "required": [
+            "temperature_base",
+            "temperature_effective",
+            "deliberation_budget_allocated"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "temperature_base": { "type": "number", "minimum": 0.0, "maximum": 2.0 },
+            "temperature_effective": { "type": "number", "minimum": 0.0, "maximum": 2.0 },
+            "deliberation_budget_allocated": { "type": "integer", "minimum": 1, "maximum": 10 }
+          }
+        },
+        "request_text_digest": {
+          "type": "string",
+          "pattern": "^sha256:[a-f0-9]{64}$"
+        },
+        "source_evidence": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["atom_id", "lane", "premise_text", "premise_digest"],
+            "additionalProperties": false,
+            "properties": {
+              "atom_id": { "type": "string" },
+              "lane": { "type": "string" },
+              "premise_text": { "type": "string" },
+              "premise_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+            }
+          }
+        },
+        "provisional_output": {
+          "type": "object",
+          "required": ["output_text", "output_digest"],
+          "additionalProperties": false,
+          "properties": {
+            "output_text": { "type": "string" },
+            "output_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+          }
+        }
+      }
+    },
+    "compliance_governance": {
+      "type": "object",
+      "required": [
+        "policy_invoked",
+        "affective_conflict_score",
+        "deliberation_rounds_executed",
+        "evaluation_verdict",
+        "downstream_action_taken",
+        "state_version_before",
+        "state_version_after",
+        "human_oversight"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "policy_invoked": { "type": "string" },
+        "affective_conflict_score": { "type": "number", "minimum": 0.0, "maximum": 1.0 },
+        "deliberation_rounds_executed": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "evaluation_verdict": {
+          "type": "object",
+          "required": ["is_contradiction", "polarity_clash_detected", "resolution_strategy"],
+          "additionalProperties": false,
+          "properties": {
+            "is_contradiction": { "type": "boolean" },
+            "polarity_clash_detected": { "type": "boolean" },
+            "resolution_strategy": {
+              "type": "string",
+              "enum": [
+                "ALLOW_MERGE",
+                "LOCK_AXIOMATIC_LANE",
+                "QUARANTINE_FOR_ARBITRATION",
+                "DROP_MUTATION"
+              ]
+            }
+          }
+        },
+        "downstream_action_taken": {
+          "type": "string",
+          "enum": [
+            "COMMITTED",
+            "QUARANTINED",
+            "HARD_BLOCKED",
+            "WRITE_BACK_BLOCKED_TO_QUARANTINE"
+          ]
+        },
+        "state_version_before": { "type": "string" },
+        "state_version_after": { "type": "string" },
+        "human_oversight": {
+          "type": "object",
+          "required": [
+            "required",
+            "review_status",
+            "reviewer_identity",
+            "arbitration_timestamp",
+            "override_rationale"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "required": { "type": "boolean" },
+            "review_status": {
+              "type": "string",
+              "enum": [
+                "NOT_REQUIRED",
+                "PENDING_ARBITRATION",
+                "ARBITRATED_APPROVED",
+                "ARBITRATED_REJECTED",
+                "OVERRIDDEN"
+              ]
+            },
+            "reviewer_identity": { "type": ["string", "null"] },
+            "arbitration_timestamp": { "type": ["string", "null"], "format": "date-time" },
+            "override_rationale": { "type": ["string", "null"] }
+          }
+        }
+      }
+    },
+    "cryptographic_proof": {
+      "type": "object",
+      "required": [
+        "canonicalization",
+        "hashing_algorithm",
+        "forensic_digest",
+        "governance_digest",
+        "receipt_digest",
+        "parent_receipt_digest",
+        "signature_algorithm",
+        "key_id",
+        "signature",
+        "signature_verified"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "canonicalization": { "type": "string", "enum": ["RFC-8785-JCS"] },
+        "hashing_algorithm": { "type": "string", "enum": ["SHA-256"] },
+        "forensic_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "governance_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "receipt_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "parent_receipt_digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+        "signature_algorithm": { "type": "string", "enum": ["Ed25519", "ECDSA-P256-SHA256"] },
+        "key_id": { "type": "string" },
+        "signature": { "type": "string", "pattern": "^[a-f0-9]{128}|[A-Za-z0-9_-]{86,88}$" },
+        "signature_verified": { "type": "boolean" },
+        "verification_key_reference": { "type": "string" }
+      }
+    }
+  }
+}

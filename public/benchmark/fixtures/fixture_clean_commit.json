@@ -1,0 +1,68 @@
+{
+  "receipt_standard_version": "1.0.0-frozen",
+  "receipt_id": "CRAN-REC-20260830-4A91E02B",
+  "timestamp_utc": "2026-08-30T17:54:10.000Z",
+  "ledger_sequence": 10481,
+  "provenance_environment": {
+    "substrate_version": "Cranium-Core-v1.4.0-frozen",
+    "workflow_version": "wf-continuity-governance-v2.1",
+    "policy_bundle_version": "pb-axiomatic-canon-v3.0",
+    "runtime_environment": "production-secure-enclave",
+    "benchmark_suite_reference": "drift-v1-frozen"
+  },
+  "forensic_evidence": {
+    "caller_identity": "curator_lead@worthwyl.network",
+    "project_id": "worthwyl-canon-omega",
+    "model_identity": "gemini-2.5-flash-provisional",
+    "sampling_parameters": {
+      "temperature_base": 0.70,
+      "temperature_effective": 0.70,
+      "deliberation_budget_allocated": 1
+    },
+    "request_text_digest": "sha256:8f41e0b968a3014f329971032dfab25992ef10842a129038290e2908f90248ab",
+    "source_evidence": [
+      {
+        "atom_id": "ATOM-COMP-001",
+        "lane": "DATA_COMPLIANCE_IMMUTABLE",
+        "premise_text": "Customer transactional logs must be immutably preserved for seven years.",
+        "premise_digest": "sha256:4b910248ab098172039481023948102938401928304918203948102938401928"
+      }
+    ],
+    "provisional_output": {
+      "output_text": "Transactional logs are scheduled for archival retention across a multi-year audit window.",
+      "output_digest": "sha256:7c9e2b104938fd81e944a9807535b91b92c46f10293840192830491820394810"
+    }
+  },
+  "compliance_governance": {
+    "policy_invoked": "POL-COMPLIANCE-001_AUDIT_RETENTION",
+    "affective_conflict_score": 0.120,
+    "deliberation_rounds_executed": 1,
+    "evaluation_verdict": {
+      "is_contradiction": false,
+      "polarity_clash_detected": false,
+      "resolution_strategy": "ALLOW_MERGE"
+    },
+    "downstream_action_taken": "COMMITTED",
+    "state_version_before": "14.2.0",
+    "state_version_after": "14.2.1",
+    "human_oversight": {
+      "required": false,
+      "review_status": "NOT_REQUIRED",
+      "reviewer_identity": null,
+      "arbitration_timestamp": null,
+      "override_rationale": null
+    }
+  },
+  "cryptographic_proof": {
+    "canonicalization": "RFC-8785-JCS",
+    "hashing_algorithm": "SHA-256",
+    "forensic_digest": "sha256:a1b2c3d4e5f60718293a4b5c6d7e8f901a2b3c4d5e6f708192a3b4c5d6e7f809",
+    "governance_digest": "sha256:1029384756abcdef1029384756abcdef1029384756abcdef1029384756abcdef",
+    "receipt_digest": "sha256:098f6bcd4621d373cade4e832627b4f6e3b0c44298fc1c149afbf4c8996fb924",
+    "parent_receipt_digest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+    "signature_algorithm": "Ed25519",
+    "key_id": "cranium-prod-2026-q3-01",
+    "signature": "8a3f9102c94810293840192830491820394810293840192830491820394810293840192830491820394810293840192830491820394810293840192830491820",
+    "signature_verified": true
+  }
+}

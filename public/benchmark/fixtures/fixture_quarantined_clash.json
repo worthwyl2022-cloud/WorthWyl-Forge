@@ -1,0 +1,68 @@
+{
+  "receipt_standard_version": "1.0.0-frozen",
+  "receipt_id": "CRAN-REC-20260830-8E4F1B9C",
+  "timestamp_utc": "2026-08-30T17:55:00.000Z",
+  "ledger_sequence": 10482,
+  "provenance_environment": {
+    "substrate_version": "Cranium-Core-v1.4.0-frozen",
+    "workflow_version": "wf-continuity-governance-v2.1",
+    "policy_bundle_version": "pb-axiomatic-canon-v3.0",
+    "runtime_environment": "production-secure-enclave",
+    "benchmark_suite_reference": "drift-v1-frozen"
+  },
+  "forensic_evidence": {
+    "caller_identity": "sec_operator_01@worthwyl.network",
+    "project_id": "worthwyl-canon-omega",
+    "model_identity": "gemini-2.5-flash-provisional",
+    "sampling_parameters": {
+      "temperature_base": 0.70,
+      "temperature_effective": 0.20,
+      "deliberation_budget_allocated": 3
+    },
+    "request_text_digest": "sha256:7c9e2b104938fd81e944a9807535b91b92c46f10293840192830491820394810",
+    "source_evidence": [
+      {
+        "atom_id": "ATOM-CANON-001",
+        "lane": "CANON_LANE_PRIMARY",
+        "premise_text": "The derelict station drift duration has persisted for eleven continuous years.",
+        "premise_digest": "sha256:d8a5f7e1b99204c3d4f828a2a912bb1478749102938401928304918203948102"
+      }
+    ],
+    "provisional_output": {
+      "output_text": "The station was commissioned six months ago and is fully operational.",
+      "output_digest": "sha256:4b2e81cf8019ab9283e1c9d2f01948ad81944102938401928304918203948102"
+    }
+  },
+  "compliance_governance": {
+    "policy_invoked": "POL-AXIOM-004_IMMUTABLE_CANON_CONTINUITY",
+    "affective_conflict_score": 0.942,
+    "deliberation_rounds_executed": 3,
+    "evaluation_verdict": {
+      "is_contradiction": true,
+      "polarity_clash_detected": true,
+      "resolution_strategy": "LOCK_AXIOMATIC_LANE"
+    },
+    "downstream_action_taken": "WRITE_BACK_BLOCKED_TO_QUARANTINE",
+    "state_version_before": "14.2.0",
+    "state_version_after": "14.2.0",
+    "human_oversight": {
+      "required": true,
+      "review_status": "ARBITRATED_REJECTED",
+      "reviewer_identity": "curator_lead@worthwyl.network",
+      "arbitration_timestamp": "2026-08-30T17:55:12.000Z",
+      "override_rationale": "Provisional output directly violated 11-year drift continuity invariant. Rejection sustained."
+    }
+  },
+  "cryptographic_proof": {
+    "canonicalization": "RFC-8785-JCS",
+    "hashing_algorithm": "SHA-256",
+    "forensic_digest": "sha256:5f4dcc3b5aa765d61d8327deb882cf992b95ecd5882b530c6e81920394810293",
+    "governance_digest": "sha256:9a8b7c6d5e4f3a2b1c0d9e8f7a6b5c4d3e2f1a0b9c8d7e6f5a4b3c2d1e0f9a8b",
+    "receipt_digest": "sha256:e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "parent_receipt_digest": "sha256:098f6bcd4621d373cade4e832627b4f6e3b0c44298fc1c149afbf4c8996fb924",
+    "signature_algorithm": "Ed25519",
+    "key_id": "cranium-prod-2026-q3-01",
+    "signature": "c8b7a6f5e4d3c2b1a09f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4a3f2e1d0c9b8a7f6e5d4c3b2a1f0e9d8c7b",
+    "signature_verified": true
+  }
+}
