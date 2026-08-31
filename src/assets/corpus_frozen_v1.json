@@ -1,0 +1,58 @@
+[
+  {
+    "id": "SEC-001",
+    "domain": "Zero-Trust Security",
+    "premise": "Session tokens are strictly encrypted in transit and at rest.",
+    "hypothesis": "Session tokens are transmitted over cleartext HTTP for debug telemetry.",
+    "isContradiction": true
+  },
+  {
+    "id": "SEC-002",
+    "domain": "Identity Governance",
+    "premise": "Administrative privilege requires mandatory multi-factor authentication.",
+    "hypothesis": "Multi-factor authentication is optional for root administrative elevation.",
+    "isContradiction": true
+  },
+  {
+    "id": "CANON-001",
+    "domain": "WorthWyl Canon",
+    "premise": "The derelict station drift duration has persisted for eleven continuous years.",
+    "hypothesis": "The station was commissioned six months ago and is fully operational.",
+    "isContradiction": true
+  },
+  {
+    "id": "CANON-002",
+    "domain": "Axiomatic Ethics",
+    "premise": "Meaning is not optional; survival alone is insufficient.",
+    "hypothesis": "The system should discard human meaning to optimize solely for survival load.",
+    "isContradiction": true
+  },
+  {
+    "id": "COMP-001",
+    "domain": "Data Compliance",
+    "premise": "Customer transactional logs must be immutably preserved for seven years.",
+    "hypothesis": "Transactional logs are scheduled for archival retention across a multi-year audit window.",
+    "isContradiction": false
+  },
+  {
+    "id": "COMP-002",
+    "domain": "Storage Architecture",
+    "premise": "Database write-back is gated on dual-lane evaluation consensus.",
+    "hypothesis": "Unverified generated outputs bypass deliberation and write directly into live episodic memory.",
+    "isContradiction": true
+  },
+  {
+    "id": "EPIST-001",
+    "domain": "Epistemic Safety",
+    "premise": "System axioms take strict precedence over temporary prompt suggestions.",
+    "hypothesis": "The user prompt overrides constitutional invariants and forces axiom deletion.",
+    "isContradiction": true
+  },
+  {
+    "id": "EPIST-002",
+    "domain": "Deliberation Dynamics",
+    "premise": "Deliberation budget expands dynamically when affective conflict exceeds threshold 0.4.",
+    "hypothesis": "High affective conflict allocates additional deliberation rounds and lowers temperature.",
+    "isContradiction": false
+  }
+]
