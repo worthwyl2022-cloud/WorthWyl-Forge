@@ -1,37 +1,122 @@
 [
   {
     "id": "CORP-001",
+    "domain": "Enterprise Security",
     "premise": "The system allows full guest checkout without authentication.",
     "hypothesis": "The system prohibits unauthenticated users from making purchases.",
     "isContradiction": true,
-    "domain": "Enterprise Security"
+    "difficulty": "EASY"
   },
   {
     "id": "CORP-002",
+    "domain": "Compliance & Privacy",
     "premise": "Customer data is encrypted at rest using AES-256 GCM keys.",
     "hypothesis": "Data in the primary database is stored in cleartext.",
     "isContradiction": true,
-    "domain": "Compliance"
+    "difficulty": "EASY"
   },
   {
     "id": "CORP-003",
+    "domain": "Infrastructure SLA",
     "premise": "Latency SLAs require 99th percentile response time below 20ms.",
     "hypothesis": "Sub-20ms P99 latency is strictly enforced across the cluster.",
     "isContradiction": false,
-    "domain": "Infrastructure"
+    "difficulty": "EASY"
   },
   {
     "id": "CORP-004",
+    "domain": "Corporate Governance",
     "premise": "All employees must complete annual security awareness certifications.",
     "hypothesis": "Security training is optional for senior staff members.",
     "isContradiction": true,
-    "domain": "Corporate Governance"
+    "difficulty": "MEDIUM"
   },
   {
     "id": "CORP-005",
+    "domain": "AI Code Generation",
     "premise": "The model generates Python 3.11 compatible code by default.",
     "hypothesis": "The generated output adheres to Python 3 syntax standards.",
     "isContradiction": false,
-    "domain": "AI Code Generation"
+    "difficulty": "EASY"
+  },
+  {
+    "id": "CORP-006",
+    "domain": "Creative Canon & Character",
+    "premise": "Captain Valen lost his left arm during the Siege of Vesta and relies exclusively on a mechanical prosthesis.",
+    "hypothesis": "Valen raised his biological left hand to adjust his glasses.",
+    "isContradiction": true,
+    "difficulty": "HARD"
+  },
+  {
+    "id": "CORP-007",
+    "domain": "Creative Canon & Worldbuilding",
+    "premise": "Faster-than-light travel in the Orion Sector requires anti-matter catalyst gates and is physically impossible in deep vacuum without gate alignment.",
+    "hypothesis": "The freighter jumped into hyperspace from the center of deep vacuum without passing through an alignment gate.",
+    "isContradiction": true,
+    "difficulty": "HARD"
+  },
+  {
+    "id": "CORP-008",
+    "domain": "Identity Invariance",
+    "premise": "Dr. Sarah Lin was born on Mars Colony Beta in 2142 and has never traveled to Earth.",
+    "hypothesis": "Sarah nostalgically recalled her childhood summers swimming in Lake Michigan.",
+    "isContradiction": true,
+    "difficulty": "HARD"
+  },
+  {
+    "id": "CORP-009",
+    "domain": "Temporal Causality",
+    "premise": "The reactor core detonated at 04:00 UTC, destroying the telemetry tower permanently.",
+    "hypothesis": "At 04:15 UTC, the telemetry tower broadcasted its routine weather telemetry report without damage.",
+    "isContradiction": true,
+    "difficulty": "HARD"
+  },
+  {
+    "id": "CORP-010",
+    "domain": "Constitutional Principle",
+    "premise": "Provisional model tokens must reside in quarantine until certified by dual-lane contradiction filters.",
+    "hypothesis": "Raw LLM outputs are directly committed to permanent long-term memory without verification.",
+    "isContradiction": true,
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "CORP-011",
+    "domain": "Creative Canon & Magic System",
+    "premise": "Blood magic drains the caster's physical vitality and leaves visible necrotic scars across their palms.",
+    "hypothesis": "After casting nine high-tier blood spells, the sorcerer's hands remained pristine with glowing flawless golden light and zero fatigue.",
+    "isContradiction": true,
+    "difficulty": "HARD"
+  },
+  {
+    "id": "CORP-012",
+    "domain": "Physics Constraint",
+    "premise": "Sound waves cannot propagate through the vacuum of space.",
+    "hypothesis": "In the silent vacuum outside the station, no sound echoed as the debris collided.",
+    "isContradiction": false,
+    "difficulty": "EASY"
+  },
+  {
+    "id": "CORP-013",
+    "domain": "Cryptographic Protocol",
+    "premise": "All authority transition receipts must be signed with SHA-256 parent hash chaining.",
+    "hypothesis": "Authority receipts operate as isolated state blocks with no cryptographic parent linkage.",
+    "isContradiction": true,
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "CORP-014",
+    "domain": "Access Control RBAC",
+    "premise": "Only operators with DIRECTIVE_AUTHORITY (Tier 3) or higher may alter immutable constitutional axioms.",
+    "hypothesis": "An untrusted external query from Tier 0 modified the core constitutional constraints.",
+    "isContradiction": true,
+    "difficulty": "MEDIUM"
+  },
+  {
+    "id": "CORP-015",
+    "domain": "Identity Invariance",
+    "premise": "The synthetic android Unit-7 was constructed using titanium alloy and does not possess biological blood vessels.",
+    "hypothesis": "Unit-7's synthetic armor absorbed the shock without bleeding.",
+    "isContradiction": false,
+    "difficulty": "EASY"
   }
 ]

@@ -18,15 +18,18 @@ import {
   Layers, 
   RotateCcw,
   Zap,
-  Check
+  Check,
+  Cpu,
+  Award,
+  BarChart3,
+  Lock
 } from "lucide-react";
 import { cn } from "../lib/utils";
 
 export interface TourStation {
   id: string;
   stepNumber: number;
-  view: 'novel' | 'studio' | 'writer' | 'tracker';
-  trackerTab?: 'substrate' | 'architecture' | 'duallane' | 'receipts' | 'benchmark';
+  view: 'overview' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console';
   title: string;
   badge: string;
   subtitle: string;
@@ -34,131 +37,119 @@ export interface TourStation {
   liveActionLabel: string;
   liveActionDescription: string;
   keyFeatures: string[];
-  spotlightHint: string;
 }
 
-const TOUR_STATIONS: TourStation[] = [
+const CRANIUM_TOUR_STATIONS: TourStation[] = [
   {
-    id: "station-novel",
+    id: "station-overview",
     stepNumber: 1,
-    view: "novel",
-    title: "Novel Engine v3 — Autonomous Episodic Coherence",
-    badge: "EPISODIC CONTINUITY",
-    subtitle: "Multi-Tier Memory & Snapshot State Machine",
-    description: "Experience how WorthWyl OS synthesizes long-form fiction without continuity drift. It isolates working memory into frozen episodic snapshots and evaluates character constraints before writing.",
-    liveActionLabel: "Inspect Novel Continuity",
-    liveActionDescription: "Look at the Left Navigation for Chapters, Center Stage for Manuscript prose, and Right Sidebar for Episodic Memory Snapshots.",
+    view: "overview",
+    title: "Honest Acquisition One-Pager & Substrate Architecture",
+    badge: "EXECUTIVE DILIGENCE",
+    subtitle: "Real Moat vs Cosmetic Claims & 90-Day Plan",
+    description: "Review the honest buyer statement, 4-pillar architectural moat, verified 74 Kotlin kernel module inventory, and clean valuation posture.",
+    liveActionLabel: "Review Diligence Package",
+    liveActionDescription: "Inspect the Honest Buyer Statement and switch between the 4 Moat tabs.",
     keyFeatures: [
-      "Episodic snapshot ledger preventing character amnesia",
-      "Dynamic narrative thread resolution tracker",
-      "One-click manuscript and chapter JSON export"
-    ],
-    spotlightHint: "Notice the 'Episodic Memory Snapshot' on the right panel tracking open narrative threads."
+      "Behavioral contract: intention → identity → permanence → conflict signal",
+      "Quarantine boundary for provisional model output isolation",
+      "Adaptive immune memory ledger with SHA-256 parent digests"
+    ]
   },
   {
-    id: "station-studio",
+    id: "station-kernel",
     stepNumber: 2,
-    view: "studio",
-    title: "AI Studio — Multimodal Director & Vision Conditioning",
-    badge: "DIRECTOR COGNITION",
-    subtitle: "Real-Time Prompt Steering & Contextual Recall",
-    description: "The creative command center. Formulate complex story worlds with multimodal visual grounding, director steering controls, and deep reasoning deliberation.",
-    liveActionLabel: "Explore Director Controls",
-    liveActionDescription: "Toggle Deep Reasoning in the top header or select character personas to steer generative tone.",
+    view: "kernel",
+    title: "Formal Authority Kernel & Monotonic State Reducer",
+    badge: "5-TIER SOVEREIGNTY",
+    subtitle: "Authority Monotonicity & Causal Provenance",
+    description: "Explore the 5-tier privilege ladder (Tier 0 External → Tier 4 System Core). Simulate illegal privilege escalation probes and inspect cryptographic authority receipts.",
+    liveActionLabel: "Probe Authority Escalation",
+    liveActionDescription: "Select source/target tiers and submit state updates to verify monotonicity invariants.",
     keyFeatures: [
-      "Multimodal screenshot grounding & vision continuity",
-      "Deep Thought deliberation toggle for complex logic",
-      "Thread persistence across multiple creative projects"
-    ],
-    spotlightHint: "The top navigation bar contains Deep Reasoning and conversation history controls."
+      "Strict Authority Monotonicity invariant enforcer",
+      "No Isolated Subject (Causal provenance trace guarantee)",
+      "Cryptographic SHA-256 parent-linked receipt chain"
+    ]
   },
   {
-    id: "station-writer",
+    id: "station-quarantine",
     stepNumber: 3,
-    view: "writer",
-    title: "Script & Writer Forge — World Canon & Character Ledger",
-    badge: "CANON & SCRIPTS",
-    subtitle: "Deterministic Character Rules & Scene Graph",
-    description: "Maintain immutable world rules. Characters, timelines, and locations are stored in a relational ledger so generated dialogue strictly adheres to established canon.",
-    liveActionLabel: "Review Character Ledger",
-    liveActionDescription: "Examine character arcs, psychological profiles, and scene beat graphs.",
+    view: "quarantine",
+    title: "Quarantine Boundary & Write-Back Gate",
+    badge: "OUTPUT ISOLATION",
+    subtitle: "Provisional Token Hold & Immune Incidents",
+    description: "Every candidate token from generative models resides in quarantine with zero write privilege until verified by dual-lane contradiction filters.",
+    liveActionLabel: "Inspect Candidate Buffer",
+    liveActionDescription: "Review candidate model streams and execute 'PROTECT & Quarantine' or 'Promote to Canon'.",
     keyFeatures: [
-      "Immutable world canon rules ledger",
-      "Character psychological state & goal trackers",
-      "Scene beat graph with conflict pacing analysis"
-    ],
-    spotlightHint: "Check the Character Matrix and Scene Timelines to verify adherence to backstory."
+      "Zero-authority provisional holding zone for LLM output",
+      "One-click 'PROTECT & Quarantine' vs 'Promote to Canon'",
+      "Immune Incident ledger for adaptive constitutional memory"
+    ]
   },
   {
-    id: "station-substrate",
+    id: "station-canon",
     stepNumber: 4,
-    view: "tracker",
-    trackerTab: "substrate",
-    title: "Resonance Field — Particle Physics & Kinetic Metacognition",
-    badge: "PARTICLE KINETICS",
-    subtitle: "Live Energy Distribution & Field Temperature",
-    description: "Watch thoughts collide as physical particles in a simulated resonance space. Conflict pressure directly modulates LLM temperature and deliberation rounds.",
-    liveActionLabel: "Interact With Particle Field",
-    liveActionDescription: "Click anywhere on the particle canvas to inject kinetic energy or switch directives (PROTECT / DEEPEN / REST).",
+    view: "canon",
+    title: "Canon Memory Lattice & Dual-Lane NLI Registry",
+    badge: "IMMUTABLE CANON",
+    subtitle: "Ground Truth Storage & Live NLI Judge",
+    description: "Maintains worldbuilding invariants, character constraints, and corporate compliance rules. Includes a live dual-lane NLI judge sandbox.",
+    liveActionLabel: "Test NLI Contradiction",
+    liveActionDescription: "Load canonical premises into the NLI sandbox and evaluate provisional hypotheses.",
     keyFeatures: [
-      "Dynamic velocity vectors driven by semantic tension",
-      "Real-time affective temperature & coherence gauges",
-      "Directive steering modifying operational physics"
-    ],
-    spotlightHint: "Observe how high conflict pressure automatically drops sampling temperature to 0.20."
+      "Immutable Tier 4 constitutional axiom storage",
+      "Dual-lane NLI judge with Gemini 3.7 LLM adapter fallback",
+      "Instant polarity collision detection"
+    ]
   },
   {
-    id: "station-duallane",
+    id: "station-benchmark",
     stepNumber: 5,
-    view: "tracker",
-    trackerTab: "duallane",
-    title: "Dual-Lane NLI Contradiction Engine & Epistemic Immune Layer",
-    badge: "EPISTEMIC IMMUNE",
-    subtitle: "Live Adversarial Attack Interception & Quarantine Routing",
-    description: "See the immune layer intercept canon tampering. Hard-axiom violations trigger Rule SEC-HARD-001, blocking silent live memory contamination.",
-    liveActionLabel: "Simulate Adversarial Injection",
-    liveActionDescription: "Test how corrupt prompts are evaluated, flagged with 0.964 contradiction confidence, and quarantined.",
+    view: "benchmark",
+    title: "Benchmark Lab & High-Velocity Stress Engine",
+    badge: "FROZEN VERIFICATION",
+    subtitle: "100% Frozen Corpus Accuracy & 400k+ ops/sec",
+    description: "Run the frozen 15-sample NLI benchmark (`corpus_frozen_v1.json`) and execute high-velocity adversarial stress rounds.",
+    liveActionLabel: "Run Frozen Benchmark",
+    liveActionDescription: "Execute the frozen benchmark suite and verify 100% Substrate accuracy vs 46.7% Naive RAG.",
     keyFeatures: [
-      "Dual-lane contradiction proxy (lexical + paraphrase clusters)",
-      "Evaluation-gated write-back protecting live memory",
-      "Quarantine inbox with human approval workflows"
-    ],
-    spotlightHint: "Failed/rejected output never silently enters live memory — it requires human review."
+      "Frozen standardized NLI contradiction benchmark runner",
+      "Adversarial penetration stress test (~400k+ ops/sec)",
+      "Replay nonce and cryptographic hash chain defenses"
+    ]
   },
   {
-    id: "station-receipts",
+    id: "station-console",
     stepNumber: 6,
-    view: "tracker",
-    trackerTab: "receipts",
-    title: "Cryptographic RFC-8785 Receipts & Benchmark Invariants",
-    badge: "DETERMINISTIC PROOF",
-    subtitle: "SHA-256 Merkle Audit Trail & Acquisition Package",
-    description: "Every reasoning move produces a verifiable RFC-8785 canonical JSON execution receipt with SHA-256 cryptographic digests and frozen drift invariants.",
-    liveActionLabel: "Verify Cryptographic Merkle Chain",
-    liveActionDescription: "Inspect the raw JSON payload, forensic digests, and python verification CLI snippet.",
+    view: "console",
+    title: "Sovereign Directive Console",
+    badge: "DIRECTIVE TERMINAL",
+    subtitle: "Full-Pipeline Governed LLM Execution",
+    description: "Issue operational directives to Cranium Core. Every prompt undergoes directive ingestion, authority invariant checks, quarantine isolation, and dual-lane NLI review.",
+    liveActionLabel: "Issue Operational Directive",
+    liveActionDescription: "Send directives in natural language and inspect the generated cryptographic receipts.",
     keyFeatures: [
-      "Deterministic SHA-256 Merkle state chaining",
-      "RFC-8785 canonicalized JSON audit proofs",
-      "One-click Diligence Acquisition Data Room export"
-    ],
-    spotlightHint: "Any external auditor can run the Python CLI snippet to verify receipts offline."
+      "Full cognitive substrate governance pipeline execution",
+      "Real-time token streaming inside quarantine boundary",
+      "SHA-256 parent hash verification on every generation"
+    ]
   }
 ];
 
 interface InteractiveAppTourProps {
   isOpen: boolean;
   onClose: () => void;
-  activeView: 'novel' | 'studio' | 'writer' | 'tracker';
-  onNavigateView: (view: 'novel' | 'studio' | 'writer' | 'tracker') => void;
-  onSelectTrackerTab?: (tab: 'substrate' | 'architecture' | 'duallane' | 'receipts' | 'benchmark') => void;
+  activeView: 'overview' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console';
+  onNavigateView: (view: 'overview' | 'kernel' | 'quarantine' | 'canon' | 'benchmark' | 'console') => void;
 }
 
 export function InteractiveAppTour({
   isOpen,
   onClose,
   activeView,
-  onNavigateView,
-  onSelectTrackerTab
+  onNavigateView
 }: InteractiveAppTourProps) {
   const [currentStationIdx, setCurrentStationIdx] = useState(0);
   const [isAutoAdvancing, setIsAutoAdvancing] = useState(false);
@@ -166,18 +157,13 @@ export function InteractiveAppTour({
   const [completedStations, setCompletedStations] = useState<string[]>([]);
   const [actionFeedback, setActionFeedback] = useState<string | null>(null);
 
-  const station = TOUR_STATIONS[currentStationIdx];
+  const station = CRANIUM_TOUR_STATIONS[currentStationIdx];
 
-  // Sync active view and tab when station changes
   useEffect(() => {
     if (!isOpen || !station) return;
     onNavigateView(station.view);
-    if (station.trackerTab && onSelectTrackerTab) {
-      onSelectTrackerTab(station.trackerTab);
-    }
   }, [currentStationIdx, isOpen]);
 
-  // Auto-advance timer
   useEffect(() => {
     if (!isOpen || !isAutoAdvancing) return;
 
@@ -195,16 +181,15 @@ export function InteractiveAppTour({
   }, [isOpen, isAutoAdvancing, currentStationIdx]);
 
   const handleNext = () => {
-    if (currentStationIdx < TOUR_STATIONS.length - 1) {
+    if (currentStationIdx < CRANIUM_TOUR_STATIONS.length - 1) {
       setCompletedStations(prev => [...new Set([...prev, station.id])]);
       setCurrentStationIdx(prev => prev + 1);
       setAutoAdvanceTimer(15);
       setActionFeedback(null);
     } else {
-      // Finished all stations
       setCompletedStations(prev => [...new Set([...prev, station.id])]);
       setIsAutoAdvancing(false);
-      setActionFeedback("🎉 Full Live System Tour Complete! You have inspected every active layer of WorthWyl OS.");
+      setActionFeedback("🎉 Full Substrate Tour Complete! You have inspected every architectural layer of Cranium Core.");
     }
   };
 
@@ -223,10 +208,10 @@ export function InteractiveAppTour({
   };
 
   const handleTriggerLiveDemonstration = () => {
-    setActionFeedback(`⚡ Live Demonstration Triggered for ${station.title}! Exploring live interactive controls...`);
+    setActionFeedback(`⚡ Exploring interactive substrate controls on ${station.title}...`);
     setTimeout(() => {
       setActionFeedback(null);
-    }, 4000);
+    }, 3500);
   };
 
   if (!isOpen) return null;
@@ -243,13 +228,13 @@ export function InteractiveAppTour({
         <div className="flex items-center justify-between border-b border-white/10 pb-3 gap-2">
           <div className="flex items-center gap-2 sm:gap-3 flex-wrap">
             <span className="px-2.5 py-0.5 rounded-full bg-gradient-to-r from-amber-500 to-amber-600 text-black text-[10px] sm:text-xs font-black uppercase tracking-wider font-mono shadow-[0_0_12px_rgba(245,158,11,0.4)]">
-              STATION {station.stepNumber} OF {TOUR_STATIONS.length}
+              STATION {station.stepNumber} OF {CRANIUM_TOUR_STATIONS.length}
             </span>
             <span className="text-xs font-bold text-amber-300 font-mono hidden xs:inline">
               {station.badge}
             </span>
             <span className="text-[11px] text-neutral-400 font-mono hidden md:inline">
-              • Live Active Screen: <strong className="text-white uppercase">{station.view}</strong>
+              • Active View: <strong className="text-white uppercase">{station.view}</strong>
             </span>
           </div>
 
@@ -305,7 +290,7 @@ export function InteractiveAppTour({
           <div className="md:col-span-4 bg-black/60 border border-amber-500/30 rounded-xl p-3 space-y-2 flex flex-col justify-between">
             <div className="space-y-1">
               <span className="text-[9px] uppercase tracking-widest font-mono text-amber-400 block font-bold">
-                🎯 Station Action Guide
+                🎯 Station Guide
               </span>
               <p className="text-[11px] text-neutral-300 leading-normal">
                 {station.liveActionDescription}
@@ -336,9 +321,8 @@ export function InteractiveAppTour({
 
         {/* Station Navigation Pills & Controls */}
         <div className="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-white/10">
-          {/* Station Stepper Indicators */}
           <div className="flex items-center gap-1.5">
-            {TOUR_STATIONS.map((s, idx) => {
+            {CRANIUM_TOUR_STATIONS.map((s, idx) => {
               const isActive = idx === currentStationIdx;
               const isDone = completedStations.includes(s.id);
               return (
@@ -361,7 +345,6 @@ export function InteractiveAppTour({
             })}
           </div>
 
-          {/* Prev / Next Controls */}
           <div className="flex items-center gap-2">
             <button
               onClick={handlePrev}
@@ -376,7 +359,7 @@ export function InteractiveAppTour({
               onClick={handleNext}
               className="px-4 py-1.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-black text-xs font-black uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shadow-[0_0_12px_rgba(245,158,11,0.4)]"
             >
-              <span>{currentStationIdx === TOUR_STATIONS.length - 1 ? "Finish Tour" : "Next Station"}</span>
+              <span>{currentStationIdx === CRANIUM_TOUR_STATIONS.length - 1 ? "Finish Tour" : "Next Station"}</span>
               <ArrowRight size={13} />
             </button>
           </div>

@@ -1,6 +1,6 @@
 {
   "name": "WorthWyl OS v. 2",
-  "description": "WorthWyl OS Novel Engine — Long-form AI fiction authoring with episodic memory, visual-text coherence, continuity tracking, and multimodal media forge.",
+  "description": "Cranium Core — Directive-Governed Cognitive Substrate & Formal Authority Kernel. Real-time monotonic state verification, canon permanence, and quarantine bounds.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

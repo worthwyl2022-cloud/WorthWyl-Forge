@@ -202,7 +202,8 @@ export function SelfDrivingDemoPlayer({ isOpen, onClose, onLaunchInteractiveTour
   const [voiceAudioEnabled, setVoiceAudioEnabled] = useState(true);
   const [visibleLogCount, setVisibleLogCount] = useState(1);
 
-  const scene = DEMO_SCENES[currentSceneIdx];
+  const safeSceneIdx = Math.max(0, Math.min(currentSceneIdx, DEMO_SCENES.length - 1));
+  const scene = DEMO_SCENES[safeSceneIdx] || DEMO_SCENES[0];
   const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   // Total Progress Math
