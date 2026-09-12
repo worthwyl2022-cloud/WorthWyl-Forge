@@ -1880,7 +1880,7 @@ Return valid JSON: {"isContradiction": boolean, "confidence": number, "reasoning
           naiveRagAccuracy: "46.7%",
           relativeImprovement: "+53.3%"
         },
-        auditAttestation: "VERIFIED_FORMAL_GATE"
+        auditAttestation: "FIXTURE_NOT_KERNEL_VERIFIED"
       }
     };
 
@@ -1899,7 +1899,7 @@ Return valid JSON: {"isContradiction": boolean, "confidence": number, "reasoning
         publicKeyPem: SOVEREIGN_PUBLIC_KEY,
         attester: "Cranium Sovereign Cryptographic Authority",
         verificationStandard: "RFC-6979 / RFC-8785",
-        status: "CRYPTOGRAPHICALLY_VERIFIED"
+        status: "NON_CANONICAL_LOCAL_RESULT"
       }
     };
 
