@@ -1,5 +1,5 @@
 # Cranium Substrate™ — Repository Organization Script
-# Automated helper to reorganize worthwyl2022-cloud/Cranium-Substrate- into clean directories
+# Automated helper to reorganize worthwyl2022-cloud/cranium-substrate-reference into clean directories
 
 mkdir -p benchmark audit showcase docs ip_record
 

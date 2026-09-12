@@ -1,6 +1,6 @@
 /**
  * Cranium Substrate™ Cryptographic Receipt & Live Runner Engine
- * Direct TypeScript integration of worthwyl2022-cloud/Cranium-Substrate-
+ * Direct TypeScript integration of worthwyl2022-cloud/cranium-substrate-reference
  * 
  * Features:
  * - Deterministic SHA-256 integrity signatures

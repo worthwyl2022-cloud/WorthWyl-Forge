@@ -2,7 +2,7 @@
 
 ## Snapshot
 
-- Repository: `worthwyl2022-cloud/WorthWyl-Forge`
+- Repository: `worthwyl2022-cloud/worthwyl-forge`
 - Default working branch observed: `main`
 - Commit count at inventory: `13`
 - Files at inventory: `163`
